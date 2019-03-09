@@ -17,6 +17,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -59,44 +62,56 @@ public class VentanaContinuarPartida {
         this.imagen4 = new Image(input4);
         this.img4 = new ImageView(imagen4);
         
-        this.texto1 = new Text("AAA");
+        this.texto1 = new Text("Partida Nº1");
+        this.texto1.setFont(Font.font(null, FontWeight.MEDIUM, FontPosture.REGULAR, 20));
         this.texto2 = new Text("nivel 2");
         this.texto3 = new Text("2 vidas");
         
         this.vbox1 = new VBox(texto1, texto2, texto3);
-        this.vbox1.setAlignment(Pos.CENTER);
+        this.vbox1.setAlignment(Pos.CENTER_LEFT);
+        this.vbox1.setSpacing(10);
         this.hbox3 = new HBox(img1,vbox1);
         this.hbox3.setAlignment(Pos.CENTER);
+        this.hbox3.setSpacing(20);
         
         
-        this.texto4 = new Text("BBB");
+        this.texto4 = new Text("Partida Nº2");
+        this.texto4.setFont(Font.font(null, FontWeight.MEDIUM, FontPosture.REGULAR, 20));
         this.texto5 = new Text("nivel 1");
         this.texto6 = new Text("1 vida");
         
         this.vbox2 = new VBox(texto4, texto5, texto6);
-        this.vbox2.setAlignment(Pos.CENTER);
+        this.vbox2.setAlignment(Pos.CENTER_LEFT);
+        this.vbox2.setSpacing(10);
         this.hbox4 = new HBox(img2,vbox2);
         this.hbox4.setAlignment(Pos.CENTER);
+        this.hbox4.setSpacing(20);
         
     
-        this.texto7 = new Text("vacio");
+        this.texto7 = new Text("Partida Nº3");
+        this.texto7.setFont(Font.font(null, FontWeight.MEDIUM, FontPosture.REGULAR, 20));
         this.texto8 = new Text(null);
         this.texto9 = new Text(null);
         
         this.vbox3 = new VBox(texto7, texto8, texto9);
-        this.vbox3.setAlignment(Pos.CENTER);
+        this.vbox3.setAlignment(Pos.CENTER_LEFT);
+        this.vbox3.setSpacing(10);
         this.hbox5 = new HBox(img3,vbox3);
         this.hbox5.setAlignment(Pos.CENTER);
+        this.hbox5.setSpacing(20);
         
         
-        this.texto10 = new Text("vacio");
+        this.texto10 = new Text("Partida Nº4");
+        this.texto10.setFont(Font.font(null, FontWeight.MEDIUM, FontPosture.REGULAR, 20));
         this.texto11 = new Text(null);
         this.texto12 = new Text(null);
         
         this.vbox4 = new VBox(texto10, texto11, texto12);
-        this.vbox4.setAlignment(Pos.CENTER);
+        this.vbox4.setAlignment(Pos.CENTER_LEFT);
+        this.vbox4.setSpacing(10);
         this.hbox6 = new HBox(img4,vbox4);
         this.hbox6.setAlignment(Pos.CENTER);
+        this.hbox6.setSpacing(20);
         
         
         this.input5 = new FileInputStream("ImagenesJuego/regresar 2.png");
@@ -126,6 +141,10 @@ public class VentanaContinuarPartida {
         return img1;
     }
 
+    public ImageView getImg2() {
+        return img2;
+    }
+    
     public ImageView getImg3() {
         return img3;
     }
@@ -137,12 +156,6 @@ public class VentanaContinuarPartida {
     public ImageView getImg5() {
         return img5;
     }
-
-    public ImageView getImg6() {
-        return img6;
-    }
-    
-    
     
     public void mostrar(Stage stage){
         stage.setTitle("Ventana Continuar Partida");

@@ -22,6 +22,14 @@ public class ControladorVentanaContinuarPartida {
 
     public ControladorVentanaContinuarPartida() throws FileNotFoundException {
         this.ventana = new VentanaContinuarPartida();
+        this.ventana.getImg1()
+                .setOnMousePressed(new EventoMouse9());
+        this.ventana.getImg2()
+                .setOnMousePressed(new EventoMouse10());
+        this.ventana.getImg3()
+                .setOnMousePressed(new EventoMouse11());
+        this.ventana.getImg4()
+                .setOnMousePressed(new EventoMouse12());
         this.ventana.getImg5()
                 .setOnMousePressed(new EventoMouse4());
         
@@ -46,4 +54,32 @@ public class ControladorVentanaContinuarPartida {
         }
     }
     
+    class EventoMouse9 implements EventHandler<MouseEvent>{
+
+        @Override
+        public void handle(MouseEvent t) {
+            System.out.println("SI0");
+        }
+    }
+    class EventoMouse10 implements EventHandler<MouseEvent>{
+
+        @Override
+        public void handle(MouseEvent t) {
+            System.out.println("SI1");
+        }
+    }
+    class EventoMouse11 implements EventHandler<MouseEvent>{
+
+        @Override
+        public void handle(MouseEvent t) {
+            System.out.println("SI2");
+        }
+    }
+    class EventoMouse12 implements EventHandler<MouseEvent>{
+
+        @Override
+        public void handle(MouseEvent t) {
+            System.out.println("SI3");
+        }
+    }
 }
