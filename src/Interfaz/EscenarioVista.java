@@ -79,6 +79,7 @@ public class EscenarioVista {
         stage.setTitle("Ventana Principal");
         stage.setScene(escena);
         stage.show();
+        juego.getCronometro().setActivo(true);        
         juego.start();
     }
     
@@ -87,6 +88,7 @@ public class EscenarioVista {
         stage.setScene(escena);
         stage.show();
         juego.stop();
+        juego.getCronometro().setActivo(false);
     }
 
     public ImageView getImg1() {

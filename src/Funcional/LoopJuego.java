@@ -30,9 +30,7 @@ import javafx.scene.text.FontWeight;
  */
 public class LoopJuego extends AnimationTimer implements Runnable{
     private Cronometro cronometro;
-    private Font font;
-    private long cont;
-    public static boolean cerrar = false;
+    private boolean cont;
     private Nivel nivel;
     private Scene escena; //Para controlar los eventos del teclado y para el cambio de nivel.
     private GraphicsContext lapiz; //Objeto con el que se va a "dibujar" en el canvas
@@ -54,7 +52,7 @@ public class LoopJuego extends AnimationTimer implements Runnable{
         this.Fondo = new Image("ImagenesJuego/Fondo.png");
         //this.Enemigo = new Image(Enemigo);
         this.cronometro = new Cronometro();
-        this.cont = 0;
+        this.cont = true;
     }
     
     /**
@@ -65,18 +63,17 @@ public class LoopJuego extends AnimationTimer implements Runnable{
     public void handle(long now) {
         //Se establece el fondo.
         lapiz.drawImage(this.Fondo, 0, 0 );
+        
         //dibujar cronometro
         lapiz.setFill(Color.WHITE);
         lapiz.setFont(Font.font(null, FontWeight.BOLD, FontPosture.REGULAR, 30));
-        if(this.cont==0){
+        if(this.cont){
             cronometro.start();
+            this.cont = false;
         }
-        if(LoopJuego.cerrar){
-            cronometro.setActivo(false);
-            cronometro.interrupt();
-        }        
         lapiz.fillText(cronometro.getCadena(),900, 40);
-        this.cont++;
+        
+        
         /*Se implementa el siguiente fragmento de codigo para poder visulizar
         las formas de los elementos del juego y así poder detectar(visualmente)
         cuando halla una colisión.
@@ -100,6 +97,7 @@ public class LoopJuego extends AnimationTimer implements Runnable{
                 }
             }
         }*/
+        
         this.nivel.dibujarParedes();
         run();
     }      
@@ -125,4 +123,22 @@ public class LoopJuego extends AnimationTimer implements Runnable{
         this.nivel.moverEnemigos(9);
         this.nivel.Semilla();
     }
+
+    /**
+     * Metodo que retorna el objeto cronometro.
+     * @return 
+     */
+    public Cronometro getCronometro() {
+        return cronometro;
+    }
+    
+    /**
+     * Metodo que cambia el valor del booleano cont.
+     * @param cont 
+     */
+    public void setCont(boolean cont) {
+        this.cont = cont;
+    }
+
+    
 }

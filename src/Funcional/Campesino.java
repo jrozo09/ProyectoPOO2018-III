@@ -35,7 +35,7 @@ public class Campesino extends Personaje{
      * @param powerUp Entero que incrementará el alcance de la explosión de la 
      * semilla del campesino.
      * @param semillas Semillas
-     * @param vidas Numero de vidas del campsino.
+     * @param vidas Numero de vidas del campesino.
      * @param posicionX Posición en X del campesino.
      * @param posicionY Posición en Y del campesino.
      * @since AgroBomberman 1.0
@@ -50,7 +50,7 @@ public class Campesino extends Personaje{
     }    
     /**
      * Metodo que retorna el valor del powerUp.
-     * @return 
+     * @return  
      */
     public boolean getPowerUp() {
         return powerUp;

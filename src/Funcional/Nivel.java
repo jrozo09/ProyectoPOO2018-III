@@ -30,7 +30,6 @@ public class Nivel {
     private Muro[][] muros;//Matriz de los muros tanto fijos como paredes de cada nivel.
     private ArrayList<Enemigo>enemigos;//Array de los enemigos.
     private Campesino campesino; //Personaje principal.
-    private Contador contador;
     private GraphicsContext lapiz;
     private ArrayList<String> pulsacionTeclado = null;//Array para gestionar los eventos del teclado
     private int secuencia = 0;
@@ -55,7 +54,6 @@ public class Nivel {
         this.enemigos = new ArrayList<>();
         this.campesino = new Campesino(false, 1, 3, posicionX, posicionY, new Image(imgCampesino),null,
         lapiz,escena);
-        this.contador = null;
         this.lapiz = lapiz;
         this.pulsacionTeclado = new ArrayList<>();
         
