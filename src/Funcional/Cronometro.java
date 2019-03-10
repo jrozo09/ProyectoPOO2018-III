@@ -23,7 +23,8 @@ public class Cronometro extends Thread {
     @Override
     public void run() {
         while (true) {
-            if (activo) {
+            System.out.println(activo);
+            if (this.activo) {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
@@ -77,11 +78,13 @@ public class Cronometro extends Thread {
      * si no quedan resta un minuto.
      */
     private void restarSegundo() {
-        if (segundos <= 59 && segundos > 0) {
-            segundos--;
-        } else if (segundos == 0) {
-            segundos = 59;
-            minutos--;
+        if(minutos!=0 || segundos!=0){
+            if (segundos <= 59 && segundos > 0) {
+                segundos--;
+            } else if (segundos == 0) {
+                segundos = 59;
+                minutos--;
+            }
         }
     }
 
