@@ -12,8 +12,12 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 
 /**
  * Clase encargada de ejecutar las acciones del juego en un bucle. Asímismo, 
@@ -25,6 +29,10 @@ import javafx.scene.shape.Shape;
  * @since AgroBomberman 1.0
  */
 public class LoopJuego extends AnimationTimer implements Runnable{
+    private Cronometro cronometro;
+    private Font font;
+    private long cont;
+    public static boolean cerrar = false;
     private Nivel nivel;
     private Scene escena; //Para controlar los eventos del teclado y para el cambio de nivel.
     private GraphicsContext lapiz; //Objeto con el que se va a "dibujar" en el canvas
@@ -45,6 +53,8 @@ public class LoopJuego extends AnimationTimer implements Runnable{
                 "ImagenesJuego/Enemigo_N1_aba.png", this.lapiz,"ImagenesJuego/Pared.png");
         this.Fondo = new Image("ImagenesJuego/Fondo.png");
         //this.Enemigo = new Image(Enemigo);
+        this.cronometro = new Cronometro();
+        this.cont = 0;
     }
     
     /**
@@ -55,7 +65,18 @@ public class LoopJuego extends AnimationTimer implements Runnable{
     public void handle(long now) {
         //Se establece el fondo.
         lapiz.drawImage(this.Fondo, 0, 0 );
-        
+        //dibujar cronometro
+        lapiz.setFill(Color.WHITE);
+        lapiz.setFont(Font.font(null, FontWeight.BOLD, FontPosture.REGULAR, 30));
+        if(this.cont==0){
+            cronometro.start();
+        }
+        if(LoopJuego.cerrar){
+            cronometro.setActivo(false);
+            cronometro.interrupt();
+        }        
+        lapiz.fillText(cronometro.getCadena(),900, 40);
+        this.cont++;
         /*Se implementa el siguiente fragmento de codigo para poder visulizar
         las formas de los elementos del juego y así poder detectar(visualmente)
         cuando halla una colisión.
