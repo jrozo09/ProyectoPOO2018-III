@@ -8,10 +8,8 @@ package Interfaz;
 import java.io.FileNotFoundException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TouchEvent;
 
 /**
  *
@@ -24,8 +22,6 @@ public class ControladorVentanaPrincipal {
         this.ventana = new VentanaPrincipal();
         this.ventana.getImg0()
                 .setOnMousePressed(new EventoMouse0());
-        this.ventana.getImg1()
-                .setOnMousePressed(new EventoMouse1());
         this.ventana.getImg2()
                 .setOnMousePressed(new EventoMouse2());
         this.ventana.getImg3()
@@ -51,20 +47,6 @@ public class ControladorVentanaPrincipal {
             
         }
         
-    } 
-     
-    class EventoMouse1 implements EventHandler<MouseEvent>{
-
-        @Override
-        public void handle(MouseEvent t) {
-            try {
-                ControladorVentanaContinuarPartida controlador = 
-                        new ControladorVentanaContinuarPartida();
-                controlador.mostrarVista();
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(ControladorVentanaContinuarPartida.class.getName()).log(Level.SEVERE, null, ex);
-            }        
-        }
     } 
     
     class EventoMouse2 implements EventHandler<MouseEvent>{

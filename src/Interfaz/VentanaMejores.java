@@ -23,45 +23,33 @@ import javafx.stage.Stage;
  */
 public class VentanaMejores {
     private Scene escena;
-    private FileInputStream input0, input1, input2;
-    private Image imagen0, imagen1, imagen2;
-    private ImageView img0, img1, img2;
-    private Text texto0, texto1, texto2, texto3, texto4, texto5, texto6, texto7
-            , texto8, texto9;
-    private VBox vbox0;
-    private StackPane stack;
+    private ImageView img2;
 
     public VentanaMejores() throws FileNotFoundException {
-        this.input0 = new FileInputStream("ImagenesJuego/pantalla-tres.png");
-        this.imagen0 = new Image(input0);
-        this.img0 = new ImageView(imagen0);
+        ImageView img0 = new ImageView(new Image(new FileInputStream("ImagenesJuego/pantalla-tres.png")));
+
+        ImageView img1 = new ImageView(new Image(new FileInputStream("ImagenesJuego/mejores-puntajes-3.png")));
+
+        this.img2 = new ImageView(new Image(new FileInputStream("ImagenesJuego/regresar-3.png")));
         
-        this.input1 = new FileInputStream("ImagenesJuego/mejores-puntajes-3.png");
-        this.imagen1 = new Image(input1);
-        this.img1 = new ImageView(imagen1);
+        Text texto0 = new Text(null);
+        Text texto1 = new Text(null);
+        Text texto2 = new Text(null);
+        Text texto3 = new Text(null);
+        Text texto4 = new Text(null);
+        Text texto5 = new Text(null);
+        Text texto6 = new Text(null);
+        Text texto7 = new Text(null);
+        Text texto8 = new Text(null);
+        Text texto9 = new Text(null);
         
-        this.input2 = new FileInputStream("ImagenesJuego/regresar-3.png");
-        this.imagen2 = new Image(input2);
-        this.img2 = new ImageView(imagen2);
-        
-        this.texto0 = new Text(null);
-        this.texto1 = new Text(null);
-        this.texto2 = new Text(null);
-        this.texto3 = new Text(null);
-        this.texto4 = new Text(null);
-        this.texto5 = new Text(null);
-        this.texto6 = new Text(null);
-        this.texto7 = new Text(null);
-        this.texto8 = new Text(null);
-        this.texto9 = new Text(null);
-        
-        this.vbox0 = new VBox();
-        this.vbox0.getChildren().addAll(img1, texto0, texto1, texto2, texto3, 
+        VBox vbox0 = new VBox();
+        vbox0.getChildren().addAll(img1, texto0, texto1, texto2, texto3, 
                 texto4, texto5, texto6, texto7, texto8, texto9, img2);
-        this.vbox0.setAlignment(Pos.CENTER);
-        this.vbox0.setSpacing(30);
+        vbox0.setAlignment(Pos.CENTER);
+        vbox0.setSpacing(30);
         
-        this.stack = new StackPane(img0, vbox0);
+        StackPane stack = new StackPane(img0, vbox0);
         
         this.escena = new Scene(stack, 1050, 650, Color.STEELBLUE);
         

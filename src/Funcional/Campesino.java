@@ -5,13 +5,9 @@
  */
 package Funcional;
 
-import java.util.ArrayList;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 
@@ -31,14 +27,17 @@ public class Campesino extends Personaje{
     private int vidas;
 
     /**
-     * Constructor de la clase encargado de inicializar los atributos.
-     * @param powerUp Entero que incrementará el alcance de la explosión de la 
-     * semilla del campesino.
-     * @param semillas Semillas
-     * @param vidas Numero de vidas del campsino.
-     * @param posicionX Posición en X del campesino.
-     * @param posicionY Posición en Y del campesino.
-     * @since AgroBomberman 1.0
+     * Contructor de la clase encargado de inicializar los atributos.
+     * @param powerUp 
+     * @param semillas semillas que posee el campsino para lanzar.
+     * @param vidas numero de vidas que tiene el campesino.
+     * @param posicionX posición en el eje X del campesino.
+     * @param posicionY posición en el eje Y del campesino.
+     * @param imagen imagen con la que se va observar el campseino en el juego.
+     * @param torso contotno del campesino.
+     * @param lapiz 
+     * @param escena
+     * @since Agrobomberman 1.0
      */
     public Campesino(boolean powerUp, Semilla semillas, int vidas, int posicionX, 
             int posicionY, Image imagen,Shape torso,GraphicsContext lapiz,Scene escena) {
@@ -51,6 +50,7 @@ public class Campesino extends Personaje{
     /**
      * Metodo que retorna el valor del powerUp.
      * @return 
+     * @since Agrobomberman 1.0
      */
     public boolean getPowerUp() {
         return powerUp;
@@ -59,6 +59,7 @@ public class Campesino extends Personaje{
     /**
      * Metodo que cambia el valor del powerUp:
      * @param powerUp 
+     * @since Agrobomberman 1.0
      */
     public void setPowerUp(boolean powerUp) {
         this.powerUp = powerUp;
@@ -66,28 +67,40 @@ public class Campesino extends Personaje{
 
     
     /**
-     * Metodo que retorna la cantidad de vidas del personaje.
+     * Metodo que retorna la cantidad de vidas del campesino.
      * @return 
+     * @since Agrobomberman 1.0
      */
     public int getVidas() {
         return vidas;
     }
 
     /**
-     * Metodo que cambia la cantidad de vidas del personaje.
+     * Metodo que cambia la cantidad de vidas del campesino.
      * @param vidas 
+     * @since Agrobomberman 1.0
      */
     public void setVidas(int vidas) {
         this.vidas = vidas;
     }
-
+    
+    /**
+     * Método que retorna el objeto de tipo Semilla que posee el campesino.
+     * @return 
+     * @since Agrobomberman 1.0
+     */
     public Semilla getSemillas() {
         return semillas;
     }
-
+    /**
+     * Método que permite cambiar el objeto de tipo Semilla que posee el campesino.
+     * @param semillas 
+     * @since Agrobomberman 1.0
+     */
     public void setSemillas(Semilla semillas) {
         this.semillas = semillas;
     }
+    
     @Override
     public void moverDerecha() {
         this.posicionX= this.posicionX+2;

@@ -5,7 +5,6 @@
  */
 package Funcional;
 
-import java.util.ArrayList;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Shape;
 
@@ -50,23 +49,43 @@ public class Pared extends Muro{
     public Image getImagen() {
         return imagen;
     }
-
+    
+    /**
+     * 
+     * @param imagen 
+     */
     public void setImagen(Image imagen) {
         this.imagen = imagen;
     }
 
+    /**
+     * 
+     * @param puerta 
+     */
     public void setPuerta(Puerta puerta) {
         this.puerta = puerta;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Puerta getPuerta() {
         return puerta;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public PowerUp getPower() {
         return power;
     }
 
+    /**
+     * 
+     * @param power 
+     */
     public void setPower(PowerUp power) {
         this.power = power;
     }

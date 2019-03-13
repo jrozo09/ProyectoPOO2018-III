@@ -5,47 +5,16 @@
  */
 package Interfaz;
 
-import Funcional.LoopJuego;
-import com.sun.glass.ui.Size;
 import java.io.FileNotFoundException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-
-/**
- * Clase encargada de crear el escenario y el Canvas del juego.
- * @author Juan Esteban Rozo Urbina
- * @author David Alexander Arias Parra
- * @author Juan Andres Gonzalez Aria
- * @author Emmanuel Steven Rojas Arcila
- * @since AgroBomberman 1.0
- */
-import javafx.application.Application;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
+
 public class Escenario{
     private EscenarioVista ventana;
 
-    public Escenario() throws FileNotFoundException{
+    public Escenario() throws FileNotFoundException {
         this.ventana =  
                 new EscenarioVista();
         this.ventana.getImg1()
