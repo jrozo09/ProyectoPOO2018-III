@@ -16,6 +16,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -36,15 +39,25 @@ public class VentanaMejores {
 
         this.img2 = new ImageView(new Image(new FileInputStream("ImagenesJuego/regresar-3.png")));
         Text texto0 = new Text(null);
+        texto0.setFont(Font.font(null, FontWeight.BOLD, FontPosture.REGULAR, 30));
         Text texto1 = new Text(null);
+        texto1.setFont(Font.font(null, FontWeight.BOLD, FontPosture.REGULAR, 30));
         Text texto2 = new Text(null);
+        texto2.setFont(Font.font(null, FontWeight.BOLD, FontPosture.REGULAR, 30));
         Text texto3 = new Text(null);
+        texto3.setFont(Font.font(null, FontWeight.BOLD, FontPosture.REGULAR, 30));
         Text texto4 = new Text(null);
+        texto4.setFont(Font.font(null, FontWeight.BOLD, FontPosture.REGULAR, 30));
         Text texto5 = new Text(null);
+        texto5.setFont(Font.font(null, FontWeight.BOLD, FontPosture.REGULAR, 30));
         Text texto6 = new Text(null);
+        texto6.setFont(Font.font(null, FontWeight.BOLD, FontPosture.REGULAR, 30));
         Text texto7 = new Text(null);
+        texto7.setFont(Font.font(null, FontWeight.BOLD, FontPosture.REGULAR, 30));
         Text texto8 = new Text(null);
+        texto8.setFont(Font.font(null, FontWeight.BOLD, FontPosture.REGULAR, 30));
         Text texto9 = new Text(null);
+        texto9.setFont(Font.font(null, FontWeight.BOLD, FontPosture.REGULAR, 30));
         
         Text[] textos = new Text[10];
         textos[0] = texto0;
@@ -71,7 +84,7 @@ public class VentanaMejores {
         vbox0.getChildren().addAll(img1, texto0, texto1, texto2, texto3, 
                 texto4, texto5, texto6, texto7, texto8, texto9, img2);
         vbox0.setAlignment(Pos.CENTER);
-        vbox0.setSpacing(30);
+        vbox0.setSpacing(5);
         
         StackPane stack = new StackPane(img0, vbox0);
         
