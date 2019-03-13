@@ -540,7 +540,7 @@ public class Nivel{
                             30, 30);
                         PowerUp power = new PowerUp(p.getPosicionX(), p.getPosicionY(),
                                 new Image(new FileInputStream("ImagenesJuego/power_up.png")),
-                        contorno);
+                                contorno);
                         p.setPower(power);
                         this.muros[fila][columna]=p;
                         contador2++;
@@ -558,11 +558,13 @@ public class Nivel{
             for (int j = 1; j < 21; j++) {
                 if(this.muros[i][j].getClass().getName().equals("Funcional.Pared")){
                    Pared p = (Pared) this.muros[i][j];
-                    if (p.getPuerta()!=null) {
-                        lapiz.drawImage(p.getPuerta().getImage(), p.getPosicionX(), p.getPosicionY());
-                    }
-                    if (p.getPower()!=null) {
-                        lapiz.drawImage(p.getPower().getImage(), p.getPosicionX(), p.getPosicionY());
+                    if (p.getImagen()==null) {
+                        if (p.getPuerta() != null) {
+                            lapiz.drawImage(p.getPuerta().getImage(), p.getPosicionX(), p.getPosicionY());
+                        }
+                        if (p.getPower() != null) {
+                            lapiz.drawImage(p.getPower().getImage(), p.getPosicionX(), p.getPosicionY());
+                        }
                     }
                    lapiz.drawImage(p.getImagen(), p.getPosicionX(), p.getPosicionY());
                 }
@@ -1151,32 +1153,40 @@ public class Nivel{
 
         if (this.campesino.getPowerUp()) {
             System.out.println("entro");
-            if (!interArr) {  //mira si hay colision con un muro a la arriba de la semilla
-                lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-arr-2.png")), 0, 0, 50, 50, x, y - 50, 50, 50);
-                if(!DetectarColisionMuroFijo(semMedArr)&&!DetectarColisionPared(semMedArr)){
-                   lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-arr-2.png")), 0, 0, 50, 50, x, y - 100, 50, 50); 
+            if (!interArr) {  //mira si hay colision con un muro arriba de la semilla
+                lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-med-arr-2.png")), 0, 0, 50, 50, x, y - 50, 50, 50);
+                if (!DetectarColisionMuroFijo(semMedArr) && !DetectarColisionPared(semMedArr)) {
+                    lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-arr-2.png")), 0, 0, 50, 50, x, y - 100, 50, 50);
+                    EliminarEnemigo(x, y - 50);
+                    colisionCampesinoSemillaVer(x, y - 50, this.campesino.getPowerUp());
                 }
             }
             if (!interAba) { //mira si hay colision con un muro a la abajo de la semilla
-                lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-aba-2.png")), 0, 0, 50, 50, x, y + 50, 50, 50);
-                if(!DetectarColisionMuroFijo(semMedAba) &&!DetectarColisionPared(semMedAba)){
-                   lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-aba-2.png")), 0, 0, 50, 50, x, y + 100, 50, 50); 
+                lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-med-aba-2.png")), 0, 0, 50, 50, x, y + 50, 50, 50);
+                if (!DetectarColisionMuroFijo(semMedAba) && !DetectarColisionPared(semMedAba)) {
+                    lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-aba-2.png")), 0, 0, 50, 50, x, y + 100, 50, 50);
+                    EliminarEnemigo(x, y + 50);
+                    colisionCampesinoSemillaVer(x, y + 50, this.campesino.getPowerUp());
                 }
             }
             if (!interDer) { //mira si hay colision con un muro a la izquierda de la semilla
-                lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-der-2.png")), 0, 0, 50, 50, x+50, y , 50, 50);
-                if(!DetectarColisionMuroFijo(semMedDer)&&!DetectarColisionPared(semMedDer)){
-                   lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-der-2.png")), 0, 0, 50, 50, x+100, y, 50, 50); 
+                lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-med-der-2.png")), 0, 0, 50, 50, x + 50, y, 50, 50);
+                if (!DetectarColisionMuroFijo(semMedDer) && !DetectarColisionPared(semMedDer)) {
+                    lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-der-2.png")), 0, 0, 50, 50, x + 100, y, 50, 50);
+                    EliminarEnemigo(x + 50, y);
+                    colisionCampesinoSemillaHor(x + 50, y,this.campesino.getPowerUp());
                 }
             }
             if (!interIzq) { //mira si hay colision con un muro a la derecha de la semilla
-                lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-izq-2.png")), 0, 0, 50, 50, x-50, y, 50, 50);
-                if(!DetectarColisionMuroFijo(semMedIzq)&&!DetectarColisionPared(semMedIzq)){
-                   lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-izq-2.png")), 0, 0, 50, 50-100, x, y, 50, 50); 
+                lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-med-izq-2.png")), 0, 0, 50, 50, x - 50, y, 50, 50);
+                if (!DetectarColisionMuroFijo(semMedIzq) && !DetectarColisionPared(semMedIzq)) {
+                    lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-izq-2.png")), 0, 0, 50, 50, x - 100, y, 50, 50);
+                    EliminarEnemigo(x - 50, y);
+                    colisionCampesinoSemillaHor(x - 50, y,this.campesino.getPowerUp());
                 }
             }
 
-        }else{
+        } else {
             if (!interArr) {  //mira si hay colision con un muro a la arriba de la semilla
                 lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-arr-2.png")), 0, 0, 50, 50, x, y - 50, 50, 50);
             }
@@ -1190,6 +1200,37 @@ public class Nivel{
                 lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-izq-2.png")), 0, 0, 50, 50, x - 50, y, 50, 50);
             }
         }
+
+        if (this.campesino.getPowerUp()) {
+            //Se crean los shape que me controlan la destruccion del arbol
+            boolean interArr21 = DetectarColisionPared(semMedArr);
+            boolean interAba21 = DetectarColisionPared(semMedAba);
+            boolean interDer21 = DetectarColisionPared(semMedDer);
+            boolean interIzq21 = DetectarColisionPared(semMedIzq);
+
+            //Guardan la pocisiondel arbol que debe destruir
+            if (interArr21 && !DetectarColisionMuroFijo(semMedArr)) {
+                int[] posArr = QuePared(semMedArr);
+                int[] pos = posArr;
+                animacionDestruccionArbol(sec, interArr21, pos[0], pos[1]);
+            }
+            if (interAba21 && !DetectarColisionMuroFijo(semMedAba)) {
+                int[] posAba = QuePared(semMedAba);
+                int[] pos2 = posAba;
+                animacionDestruccionArbol(sec, interAba21, pos2[0], pos2[1]);
+            }
+            if (interDer21 && !DetectarColisionMuroFijo(semMedDer)) {
+                int[] posDer = QuePared(semMedDer);
+                int[] pos3 = posDer;
+                animacionDestruccionArbol(sec, interDer21, pos3[0], pos3[1]);
+            }
+            if (interIzq21 && !DetectarColisionMuroFijo(semMedIzq)) {
+                int[] posIzq = QuePared(semMedIzq);
+                int[] pos4 = posIzq;
+                animacionDestruccionArbol(sec, interIzq21, pos4[0], pos4[1]);
+            }
+        }
+
         //Se crean los shape que me controlan la destruccion del arbol
         boolean interArr2 = DetectarColisionPared(this.campesino.getSemillas().getArriba());
         boolean interAba2 = DetectarColisionPared(this.campesino.getSemillas().getAbajo());
@@ -1226,6 +1267,7 @@ public class Nivel{
         EliminarEnemigo(x, y);
 
         colisionCampesinoSemilla(x, y);
+        
     }
 
     /**
@@ -1391,6 +1433,52 @@ public class Nivel{
         }
     }
 
+    /**
+     * Metodo encargado de evaluar si hubo una colision de los elementos de la
+     * explosion con la semilla, y en ese caso eliminar el enemigo
+     * @param x1 indica las coordenas en x para crear el shape
+     * @param y1 indica las coordenas en y para crear el shape
+     * @param g indica si el campesino tiene el power up para evaluar diferente los shapes
+     * @since AgroBomberman 1.0
+     */
+    public void colisionCampesinoSemillaVer(int x1, int y1, boolean g){
+        
+        Shape semArr = new Rectangle(x1 + 20, y1 - 45, 10, 50);//arriba
+        Shape semAba = new Rectangle(x1 + 20, y1 + 45, 10, 50); //abajo
+
+        Shape intersection = SVGPath.intersect(semArr, this.campesino.getTorso());
+        Shape intersection2 = SVGPath.intersect(semAba, this.campesino.getTorso());
+
+        if (intersection.getBoundsInLocal().getWidth() != -1) {
+            this.kill = false;
+        } else if (intersection2.getBoundsInLocal().getWidth() != -1) {
+            this.kill = false;
+        }
+    } 
+    
+    /**
+     * Metodo encargado de evaluar si hubo una colision de los elementos de la
+     * explosion con la semilla, y en ese caso eliminar el enemigo
+     * @param x1 indica las coordenas en x para crear el shape
+     * @param y1 indica las coordenas en y para crear el shape
+     * @param g indica si el campesino tiene el power up para evaluar diferente los shapes
+     * @since AgroBomberman 1.0
+     */
+    public void colisionCampesinoSemillaHor(int x1, int y1, boolean g){
+        
+        Shape semIzq = new Rectangle(x1 - 45, y1 + 20, 50, 10); //izq
+        Shape semDer = new Rectangle(x1 + 45, y1 + 20, 50, 10); //der
+
+        Shape intersection3 = SVGPath.intersect(semIzq, this.campesino.getTorso());
+        Shape intersection4 = SVGPath.intersect(semDer, this.campesino.getTorso());
+
+        if (intersection3.getBoundsInLocal().getWidth() != -1) {
+            this.kill = false;
+        } else if (intersection4.getBoundsInLocal().getWidth() != -1) {
+            this.kill = false;
+        }
+    }
+    
     public void setNumEnemigos(int n){
         this.numEnemigos=n;
     }
