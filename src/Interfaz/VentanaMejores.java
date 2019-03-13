@@ -46,38 +46,27 @@ public class VentanaMejores {
         Text texto8 = new Text(null);
         Text texto9 = new Text(null);
         
+        Text[] textos = new Text[10];
+        textos[0] = texto0;
+        textos[1] = texto1;
+        textos[2] = texto2;
+        textos[3] = texto3;
+        textos[4] = texto4;
+        textos[5] = texto5;
+        textos[6] = texto6;
+        textos[7] = texto7;
+        textos[8] = texto8;
+        textos[9] = texto9;
+        
+        int i = 0;
         
         ArrayList<Integer> puntajes = archivo.cargar();
-        if(puntajes.get(0)!=null){
-             texto0 = new Text(puntajes.get(0).toString());
+        for(Integer inter : puntajes){
+            
+            textos[i].setText(inter.toString());
+            i++;
         }
-        if(puntajes.get(1)!=null){
-             texto1 = new Text(puntajes.get(1).toString());
-        }
-        if(puntajes.get(2)!=null){
-             texto2 = new Text(puntajes.get(2).toString());
-        }
-        if(puntajes.get(3)!=null){
-             texto3 = new Text(puntajes.get(3).toString());
-        }
-        if(puntajes.get(4)!=null){
-             texto4 = new Text(puntajes.get(4).toString());
-        }
-        if(puntajes.get(5)!=null){
-             texto5 = new Text(puntajes.get(5).toString());
-        }
-        if(puntajes.get(6)!=null){
-             texto6 = new Text(puntajes.get(6).toString());
-        }
-        if(puntajes.get(7)!=null){
-             texto7 = new Text(puntajes.get(7).toString());
-        }
-        if(puntajes.get(8)!=null){
-             texto8 = new Text(puntajes.get(8).toString());
-        }
-        if(puntajes.get(9)!=null){
-             texto9 = new Text(puntajes.get(9).toString());
-        }
+        
         VBox vbox0 = new VBox();
         vbox0.getChildren().addAll(img1, texto0, texto1, texto2, texto3, 
                 texto4, texto5, texto6, texto7, texto8, texto9, img2);
