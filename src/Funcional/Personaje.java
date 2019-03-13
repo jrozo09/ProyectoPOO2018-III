@@ -128,8 +128,4 @@ public class Personaje {
     public void setTorso(Shape torso) {
         this.torso = torso;
     }
-    
-    
-    
-    
 }

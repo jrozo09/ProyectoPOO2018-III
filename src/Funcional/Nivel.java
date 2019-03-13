@@ -34,6 +34,13 @@ public class Nivel {
     private ArrayList<String> pulsacionTeclado = null;//Array para gestionar los eventos del teclado
     private int secuencia = 0;
     private int numero = 0;
+    private int numEnemigos;
+    //------------------------------
+    private int posx;
+    private int posy;
+    private int numero2;
+    private int secuencia2;
+    private ArrayList<String> pulsacionTeclado2 = null;
     
     /**
      * Constructor de la clase encargado de inicializar los atributos. Además 
@@ -48,14 +55,16 @@ public class Nivel {
      * @since AgroBomberman 1.0
      */
     public Nivel(Scene escena,int posicionX, int posicionY, String imgCampesino, String 
-            imgEnemigos, GraphicsContext lapiz,String imgPared) {
+            imgEnemigos, GraphicsContext lapiz,String imgPared,int numEnemigos) {
         this.escena = escena;
         this.muros = new Muro[13][21];
         this.enemigos = new ArrayList<>();
-        this.campesino = new Campesino(false, 1, 3, posicionX, posicionY, new Image(imgCampesino),null,
+        this.campesino = new Campesino(false, null, 3, posicionX, posicionY, new Image(imgCampesino),null,
         lapiz,escena);
         this.lapiz = lapiz;
         this.pulsacionTeclado = new ArrayList<>();
+        this.pulsacionTeclado2 = new ArrayList<>();
+        this.numEnemigos = numEnemigos;
         
         //Se invoca el método para crear los muros tanto fijos como las paredes.
         crearMuros();
@@ -64,6 +73,7 @@ public class Nivel {
         //Se crean los enemigos
         crearEnemigos(imgEnemigos);
         
+        //Eventos pulsacion
         escena.setOnKeyPressed(
             new EventHandler<KeyEvent>()
             {
@@ -72,6 +82,8 @@ public class Nivel {
                     String code = e.getCode().toString();
                     if ( !pulsacionTeclado.contains(code) )
                         pulsacionTeclado.add( code );
+                    if ( !pulsacionTeclado2.contains(code) )
+                        pulsacionTeclado2.add( code );
                 }
             });
 
@@ -84,6 +96,11 @@ public class Nivel {
                     pulsacionTeclado.remove( code );
                 }
             });
+
+    }
+
+    public ArrayList<Enemigo> getEnemigos() {
+        return enemigos;
     }
     public boolean Rectificar(Pared p){
         for (int i = 0; i < this.enemigos.size(); i++) {
@@ -102,7 +119,7 @@ public class Nivel {
                 this.campesino.getPosicionX(), this.campesino.getPosicionY(),
                 51, 50);
         //Se crea la forma del campesino para detectar colisiones
-        Shape torsoCampesino = new Rectangle(this.campesino.getPosicionX(),this.campesino.getPosicionY(), 48, 48);
+        Shape torsoCampesino = new Rectangle(this.campesino.getPosicionX()+5,this.campesino.getPosicionY()+5, 40, 40);
         this.campesino.setTorso(torsoCampesino);
     }
     /**
@@ -138,8 +155,11 @@ public class Nivel {
         }else if (pulsacionTeclado.contains("UP")) {
             this.campesino.setImagen(new Image("ImagenesJuego/Campesino_arr.png"));
             DibujarCampesino();
-        }else{
+        }else if (pulsacionTeclado.contains("DOWN")){
             this.campesino.setImagen(new Image("ImagenesJuego/Campesino_aba.png"));
+            DibujarCampesino();
+        }else{
+            this.campesino.setImagen(new Image("ImagenesJuego/Campesino_normal.png"));
             DibujarCampesino();
         }
                 
@@ -152,7 +172,7 @@ public class Nivel {
      * @since AgroBomberman 1.0
      */
     public void crearEnemigos(String imgEnemigos){
-        int c = 10;
+        int c = this.numEnemigos;
         int x = 0;
         int y = 0; 
         boolean rectificarPos;
@@ -222,6 +242,14 @@ public class Nivel {
             }
         }
     }
+    /*public boolean detectarColisonMuro(Shape s){
+        
+    }
+    
+    public boolean detectarColisonPared(Shape s){
+        
+    }*/
+    
     public void DetectarColisionSuperiorCampesino(){
         //Se detectan las colisiones del campesino y los muros y paredes
         //Si una pared tiene su atributo imagen como null, no se impedirá el paso
@@ -234,17 +262,17 @@ public class Nivel {
                 if (intersection.getBoundsInLocal().getWidth() != -1) {
                    if(this.muros[i][j].getClass().getName().equals("Funcional.MuroFijo")){
                        if (this.pulsacionTeclado.contains("UP")) {
-                           this.campesino.setPosicionY(detector + 1);
+                           this.campesino.setPosicionY(detector + 2);
                        }else if (this.pulsacionTeclado.contains("DOWN")) {
-                           this.campesino.setPosicionY(detector - 1);
+                           this.campesino.setPosicionY(detector - 2);
                        }
                     }else if (this.muros[i][j].getClass().getName().equals("Funcional.Pared")) {
                         Pared p = (Pared) this.muros[i][j];
                         if(p.getImagen()!=null){
                             if (this.pulsacionTeclado.contains("UP")) {
-                                this.campesino.setPosicionY(detector + 1);
+                                this.campesino.setPosicionY(detector + 2);
                             } else if (this.pulsacionTeclado.contains("DOWN")) {
-                                this.campesino.setPosicionY(detector - 1);
+                                this.campesino.setPosicionY(detector - 2);
                             }
                         }
                     } 
@@ -265,17 +293,17 @@ public class Nivel {
                 if (intersection.getBoundsInLocal().getWidth() != -1) {
                    if(this.muros[i][j].getClass().getName().equals("Funcional.MuroFijo")){
                        if (this.pulsacionTeclado.contains("LEFT")) {
-                           this.campesino.setPosicionX(detector + 1);
+                           this.campesino.setPosicionX(detector + 2);
                        } else if (this.pulsacionTeclado.contains("RIGHT")) {
-                           this.campesino.setPosicionX(detector - 1);
+                           this.campesino.setPosicionX(detector - 2);
                        }
                     }else if (this.muros[i][j].getClass().getName().equals("Funcional.Pared")) {
                         Pared p = (Pared) this.muros[i][j];
                         if(p.getImagen()!=null){
                              if (this.pulsacionTeclado.contains("LEFT")) {
-                                this.campesino.setPosicionX(detector + 1);
+                                this.campesino.setPosicionX(detector + 2);
                             } else if (this.pulsacionTeclado.contains("RIGHT")) {
-                                this.campesino.setPosicionX(detector - 1);
+                                this.campesino.setPosicionX(detector - 2);
                             }
                         }
                     } 
@@ -307,6 +335,42 @@ public class Nivel {
                 }
             }
         }
+        int fila;
+        int columna;
+        int contador1 = 0;
+        while(contador1==0){
+            fila = aleatorio.nextInt(13);
+            columna = aleatorio.nextInt(21);
+            if(this.muros[fila][columna].getClass().getName().equals("Funcional.Pared")){
+                Pared p = (Pared)this.muros[fila][columna];
+                if(p.getImagen()!=null){
+                    Shape contorno = new Rectangle(p.getPosicionX()+5, p.getPosicionY()+5, 
+                            30, 30);
+                    Puerta puerta = new Puerta(p.getPosicionX(), p.getPosicionY(),
+                    new Image("ImagenesJuego/puerta.png"),contorno);
+                    p.setPuerta(puerta);
+                    this.muros[fila][columna]=p;
+                    contador1++;
+                }
+            }
+        }
+        int contador2=0;
+        while(contador2==0){
+            fila = aleatorio.nextInt(13);
+            columna = aleatorio.nextInt(21);
+            if(this.muros[fila][columna].getClass().getName().equals("Funcional.Pared")){
+                Pared p = (Pared)this.muros[fila][columna];
+                if(p.getImagen()!=null){
+                    if (p.getPuerta()==null) {
+                        PowerUp power = new PowerUp(p.getPosicionX(), p.getPosicionY(),
+                                new Image("ImagenesJuego/power_up.png"));
+                        p.setPower(power);
+                        this.muros[fila][columna]=p;
+                        contador2++;
+                    }
+                }
+            }
+        }
     }
     /**
      * Metodo encargado de dibujar las paredes en el juego.
@@ -317,6 +381,12 @@ public class Nivel {
             for (int j = 1; j < 21; j++) {
                 if(this.muros[i][j].getClass().getName().equals("Funcional.Pared")){
                    Pared p = (Pared) this.muros[i][j];
+                    if (p.getPuerta()!=null) {
+                        lapiz.drawImage(p.getPuerta().getImage(), p.getPosicionX(), p.getPosicionY());
+                    }
+                    if (p.getPower()!=null) {
+                        lapiz.drawImage(p.getPower().getImage(), p.getPosicionX(), p.getPosicionY());
+                    }
                    lapiz.drawImage(p.getImagen(), p.getPosicionX(), p.getPosicionY());
                 }
             }
@@ -459,7 +529,7 @@ public class Nivel {
         }
         return true;
     }
-    public void moverEnemigos(int num){
+    public void moverEnemigos(int num,int numNivel){
         int verificar;
         boolean mover;
         if (this.enemigos.get(num).getOrientacion().equals("Derecha")) {
@@ -471,11 +541,25 @@ public class Nivel {
                 case 2:          
                     mover = DireccionMover(num);
                     if (!mover) {
+                        if (numNivel==1) {
+                            this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_arr.png"));
+                        }else if (numNivel==2) {
+                            this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N2_arr.png"));
+                        }else if (numNivel==3) {
+                            this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N3_arr.png"));
+                        }
                         this.enemigos.get(num).setOrientacion("Arriba");
-                        this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_arr.png"));
+                        //this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_arr.png"));
                     }else{
+                        if (numNivel==1) {
+                            this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_der.png"));
+                        }else if (numNivel==2) {
+                            this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N2_der.png"));
+                        }else if (numNivel==3) {
+                            this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N3_der.png"));
+                        }
                         this.enemigos.get(num).moverDerecha();
-                        this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_der.png"));
+                        //this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_der.png"));
                     }
                     DibujarEnemigos(num);
                     break;
@@ -491,10 +575,24 @@ public class Nivel {
                                         
                     mover = DireccionMover(num);
                     if (!mover) {
+                        if (numNivel==1) {
+                            this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_aba.png"));
+                        }else if (numNivel==2) {
+                            this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N2_aba.png"));
+                        }else if (numNivel==3) {
+                            this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N3_aba.png"));
+                        }
                         this.enemigos.get(num).setOrientacion("Abajo");
-                        this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_aba.png"));
+                        //this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_aba.png"));
                     }else{
-                        this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_izq.png"));
+                        if (numNivel==1) {
+                            this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_izq.png"));
+                        }else if (numNivel==2) {
+                            this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N2_izq.png"));
+                        }else if (numNivel==3) {
+                            this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N3_izq.png"));
+                        }
+                        //this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_izq.png"));
                         this.enemigos.get(num).moverIzquierda();
                     }
                     DibujarEnemigos(num);
@@ -511,11 +609,25 @@ public class Nivel {
                                        
                     mover = DireccionMover(num);
                     if (!mover) {
+                        if (numNivel==1) {
+                            this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_izq.png"));
+                        }else if (numNivel==2) {
+                            this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N2_izq.png"));
+                        }else if (numNivel==3) {
+                            this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N3_izq.png"));
+                        }
                         this.enemigos.get(num).setOrientacion("Izquierda");
-                        this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_izq.png"));
+                        //this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_izq.png"));
                     }else{
+                        if (numNivel==1) {
+                            this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_arr.png"));
+                        }else if (numNivel==2) {
+                            this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N2_arr.png"));
+                        }else if (numNivel==3) {
+                            this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N3_arr.png"));
+                        }
                         this.enemigos.get(num).moverArriba();
-                        this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_arr.png"));
+                        //this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_arr.png"));
                     }
                     DibujarEnemigos(num);
                     break;
@@ -531,11 +643,25 @@ public class Nivel {
                                         
                     mover = DireccionMover(num);
                     if (!mover) {
+                        if (numNivel==1) {
+                            this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_der.png"));
+                        }else if (numNivel==2) {
+                            this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N2_der.png"));
+                        }else if (numNivel==3) {
+                            this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N3_der.png"));
+                        }
                         this.enemigos.get(num).setOrientacion("Derecha");
-                        this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_der.png"));
+                        //this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_der.png"));
                     }else{
+                        if (numNivel==1) {
+                            this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_aba.png"));
+                        }else if (numNivel==2) {
+                            this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N2_aba.png"));
+                        }else if (numNivel==3) {
+                            this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N3_aba.png"));
+                        }
                         this.enemigos.get(num).moverAbajo();
-                        this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_aba.png"));
+                        //this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_aba.png"));
                     }
                     DibujarEnemigos(num);
                     break;
@@ -544,9 +670,208 @@ public class Nivel {
         }
      
     }
-    public void Semilla(){
-        if(pulsacionTeclado.contains("X")){
-            System.out.println("Hola");
+
+    public Campesino getCampesino() {
+        return campesino;
+    }
+    
+    public boolean cambiarNivel(){
+        for (int i = 0; i < 13; i++) {
+            for (int j = 0; j < 21; j++) {
+                if (this.muros[i][j].getClass().getName().equals("Funcional.Pared")) {
+                    Pared p = (Pared)this.muros[i][j];
+                    if (p.getPuerta()!=null) {
+                        Shape intersection = SVGPath.intersect(this.campesino.getTorso(),
+                        p.getPuerta().getContorno());
+                        if (intersection.getBoundsInLocal().getWidth() != -1) {
+                            return true;
+                        }
+                    }
+                }
+            }
         }
+        return false;
+    }
+    //-------------------------------------
+    public int[] QuePared(Shape s){
+        //Se detectan las colisiones del campesino y los muros y paredes
+        //Si una pared tiene su atributo imagen como null, no se impedirá el paso
+        //hasta que se le asigne una imgen.
+        int[] pos = new int[2];
+        for (int i = 0; i < 13; i++) {
+            for (int j = 0; j < 21; j++) {
+                Shape intersection = SVGPath.intersect(s,
+                        this.muros[i][j].getForma());
+                if (intersection.getBoundsInLocal().getWidth() != -1) {
+                    if (this.muros[i][j].getClass().getName().equals("Funcional.Pared")) {
+                        Pared p = (Pared)this.muros[i][j];
+                        if (p.getImagen()!=null) {
+                            pos[0] = this.muros[i][j].getPosicionX();
+                            pos[1] = this.muros[i][j].getPosicionY();
+                            p.setImagen(null);
+                            this.muros[i][j] = p;
+                            return pos;
+                        }
+                        
+                    }
+                }
+            }
+
+        }
+        pos[0] = -70;
+        pos[1] = -70;
+        return pos;
+    }
+    public void PonerSemilla(){
+        if (this.numero % 300 == 0) {
+            posx = this.campesino.getPosicionX();
+            posy = this.campesino.getPosicionY();
+
+            if (pulsacionTeclado2.contains("X")) {
+                pulsacionTeclado2.remove("X");
+                secuencia2 = 0;
+            }
+            this.numero2 = 0;
+            //contadorSem.stop();
+        }
+        if (pulsacionTeclado2.contains("X")) {
+            this.numero2++;
+            //creacion del shape de la semilla que detecta si hay muros al rededor 
+            //para ver cual estremo dibuja
+            Shape semArr= new Rectangle(posx+20, posy-5, 10, 10);//arriba
+            Shape semAba= new Rectangle(posx+20, posy+45, 10, 10); //abajo
+            Shape semIzq= new Rectangle(posx-5, posy+20, 10, 10); //izq
+            Shape semDer= new Rectangle(posx+45, posy+20, 10, 10); //der
+            
+            this.campesino.setSemillas(new Semilla(posx,
+                    posy,semArr,semAba, semDer, semIzq));
+            
+            //dibuja la semilla
+            dibujarUfo(posx, posy);
+            
+            if (this.numero2 % 15 == 0) {
+                if (this.secuencia2 == 9) {
+                    this.secuencia2 = 0;
+                } else {
+                    this.secuencia2++;
+                }
+            }
+        }
+    }
+    public void dibujarUfo(double x, double y) {
+        if (secuencia2 < 5) {
+            dibujarSemilla1(x, y, secuencia2);
+        } else {
+            dibujarExplosion(x, y, secuencia2);
+        }
+    }
+    
+    public void dibujarExplosion(double x, double y, int sec) {
+        lapiz.drawImage(new Image("ImagenesJuego/sem-centro-2.png"), 0, 0, 50, 50, x, y, 50, 50);
+        
+        
+        boolean interArr = DetectarColisionMuroFijo(this.campesino.getSemillas().getArriba());
+        boolean interAba = DetectarColisionMuroFijo(this.campesino.getSemillas().getAbajo());;
+        boolean interDer = DetectarColisionMuroFijo(this.campesino.getSemillas().getDerecha());;
+        boolean interIzq = DetectarColisionMuroFijo(this.campesino.getSemillas().getIzquierda());;
+        
+        if(!interArr){  //mira si hay colision con un muro a la arriba de la semilla
+            lapiz.drawImage(new Image("ImagenesJuego/sem-arr-2.png"), 0, 0, 50, 50, x, y-50, 50, 50);
+        }
+        if(!interAba){ //mira si hay colision con un muro a la abajo de la semilla
+            lapiz.drawImage(new Image("ImagenesJuego/sem-aba-2.png"), 0, 0, 50, 50, x, y+50, 50, 50);
+        }
+        if(!interDer){ //mira si hay colision con un muro a la izquierda de la semilla
+            lapiz.drawImage(new Image("ImagenesJuego/sem-der-2.png"), 0, 0, 50, 50, x+50, y, 50, 50);
+        }
+        if(!interIzq){ //mira si hay colision con un muro a la derecha de la semilla
+            lapiz.drawImage(new Image("ImagenesJuego/sem-izq-2.png"), 0, 0, 50, 50, x-50, y, 50, 50);
+        }
+        
+        boolean interArr2 = DetectarColisionPared(this.campesino.getSemillas().getArriba());
+        boolean interAba2 = DetectarColisionPared(this.campesino.getSemillas().getAbajo());
+        boolean interDer2 = DetectarColisionPared(this.campesino.getSemillas().getDerecha());
+        boolean interIzq2 = DetectarColisionPared(this.campesino.getSemillas().getIzquierda());
+        
+        int [] posArr = QuePared(this.campesino.getSemillas().getArriba());
+        int [] posAba = QuePared(this.campesino.getSemillas().getAbajo());
+        int [] posDer = QuePared(this.campesino.getSemillas().getDerecha());
+        int [] posIzq = QuePared(this.campesino.getSemillas().getIzquierda());
+        
+        if(interArr2){
+            int [] pos= posArr;
+            animacionDestruccionArbol(sec, interArr2,pos[0],pos[1]);
+        }
+        if(interAba2){
+            int [] pos2= posAba;
+            animacionDestruccionArbol(sec, interAba2,pos2[0],pos2[1]);
+        }
+        if(interDer2){
+            int [] pos3= posDer;
+            animacionDestruccionArbol(sec, interDer2,pos3[0],pos3[1]);
+        }
+        if(interIzq2){
+            int [] pos4= posIzq;
+            animacionDestruccionArbol(sec, interIzq2,pos4[0],pos4[1]);
+        }
+    }
+    public void dibujarSemilla1(double x, double y, int sec) {
+        lapiz.drawImage(new Image("ImagenesJuego/semilla-exp.png"), 0, 50 * sec, 50, 50, x, y, 50, 50);
+        
+        lapiz.strokeRect(x, y, 50, 50);
+        lapiz.strokeOval(x+20, y-5, 10, 10);//arriba
+        lapiz.strokeOval(x+20, y+45, 10, 10); //abajo
+        lapiz.strokeOval(x-5, y+20, 10, 10); //izq
+        lapiz.strokeOval(x+45, y+20, 10, 10); //der
+    }
+    
+    public void animacionDestruccionArbol(int secuencia, boolean x, int posix, int posiy){
+        if(x){
+            //this.arbol.setIma(null);
+            lapiz.drawImage(new Image("ImagenesJuego/destruccion-arbol.png"), 0, 50 * this.secuencia, 50, 50, posix,posiy, 50, 50);
+        }
+        //puntaje = puntaje +10;
+    } 
+    public boolean DetectarColisionMuroFijo(Shape s) {
+        //Se detectan las colisiones del campesino y los muros y paredes
+        //Si una pared tiene su atributo imagen como null, no se impedirá el paso
+        //hasta que se le asigne una imgen.
+        for (int i = 0; i < 13; i++) {
+            for (int j = 0; j < 21; j++) {
+                Shape intersection = SVGPath.intersect(s,
+                        this.muros[i][j].getForma());
+                if (intersection.getBoundsInLocal().getWidth() != -1) {
+                    if (this.muros[i][j].getClass().getName().equals("Funcional.MuroFijo")) {
+                        return true;
+                    }
+                }
+            }
+
+        }
+        return false;
+    }
+
+    public boolean DetectarColisionPared(Shape s) {
+        //Se detectan las colisiones del campesino y los muros y paredes
+        //Si una pared tiene su atributo imagen como null, no se impedirá el paso
+        //hasta que se le asigne una imgen.
+        int detector = this.campesino.getPosicionX();
+        for (int i = 0; i < 13; i++) {
+            for (int j = 0; j < 21; j++) {
+                Shape intersection = SVGPath.intersect(s,
+                        this.muros[i][j].getForma());
+                if (intersection.getBoundsInLocal().getWidth() != -1) {
+                    if (this.muros[i][j].getClass().getName().equals("Funcional.Pared")) {
+                        Pared p = (Pared)this.muros[i][j];
+                        if (p.getImagen()!=null) {
+                            return true;
+                        }
+                        
+                    }
+                }
+            }
+
+        }
+        return false;
     }
 }

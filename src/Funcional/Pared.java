@@ -21,7 +21,7 @@ import javafx.scene.shape.Shape;
  */
 public class Pared extends Muro{
     private Image imagen;
-    private ArrayList<PowerUp> power;
+    private PowerUp power;
     private Puerta puerta;
 
     /**
@@ -34,7 +34,7 @@ public class Pared extends Muro{
      * @param forma Silueta de la pared, usada con el fin de detectar choques.
      * @since AgroBomberman 1.0
      */
-    public Pared(Image imagen, ArrayList<PowerUp> power, Puerta puerta, 
+    public Pared(Image imagen, PowerUp power, Puerta puerta, 
             int posicionX, int psocionY, Shape forma) {
         super(posicionX, psocionY, forma);
         this.imagen = imagen;
@@ -54,5 +54,22 @@ public class Pared extends Muro{
     public void setImagen(Image imagen) {
         this.imagen = imagen;
     }
+
+    public void setPuerta(Puerta puerta) {
+        this.puerta = puerta;
+    }
+
+    public Puerta getPuerta() {
+        return puerta;
+    }
+
+    public PowerUp getPower() {
+        return power;
+    }
+
+    public void setPower(PowerUp power) {
+        this.power = power;
+    }
+
     
 }

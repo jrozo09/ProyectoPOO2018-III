@@ -27,7 +27,7 @@ import javafx.scene.shape.Shape;
 public class Campesino extends Personaje{
     
     private boolean powerUp;
-    private int semillas;
+    private Semilla semillas;
     private int vidas;
 
     /**
@@ -35,12 +35,12 @@ public class Campesino extends Personaje{
      * @param powerUp Entero que incrementará el alcance de la explosión de la 
      * semilla del campesino.
      * @param semillas Semillas
-     * @param vidas Numero de vidas del campesino.
+     * @param vidas Numero de vidas del campsino.
      * @param posicionX Posición en X del campesino.
      * @param posicionY Posición en Y del campesino.
      * @since AgroBomberman 1.0
      */
-    public Campesino(boolean powerUp, int semillas, int vidas, int posicionX, 
+    public Campesino(boolean powerUp, Semilla semillas, int vidas, int posicionX, 
             int posicionY, Image imagen,Shape torso,GraphicsContext lapiz,Scene escena) {
         super(posicionX, posicionY, imagen,torso);
         this.powerUp = powerUp;
@@ -50,7 +50,7 @@ public class Campesino extends Personaje{
     }    
     /**
      * Metodo que retorna el valor del powerUp.
-     * @return  
+     * @return 
      */
     public boolean getPowerUp() {
         return powerUp;
@@ -63,22 +63,7 @@ public class Campesino extends Personaje{
     public void setPowerUp(boolean powerUp) {
         this.powerUp = powerUp;
     }
-    
-    /**
-     * Metodo que retorna la cantidad de semillas (0 o 1 siempre) del campesino.
-     * @return 
-     */
-    public int getSemillas() {
-        return semillas;
-    }
 
-    /**
-     * Metodo que cambia la cantidad de semillas del campesino.
-     * @param semillas 
-     */
-    public void setSemillas(int semillas) {
-        this.semillas = semillas;
-    }
     
     /**
      * Metodo que retorna la cantidad de vidas del personaje.
@@ -95,8 +80,41 @@ public class Campesino extends Personaje{
     public void setVidas(int vidas) {
         this.vidas = vidas;
     }
+
+    public Semilla getSemillas() {
+        return semillas;
+    }
+
+    public void setSemillas(Semilla semillas) {
+        this.semillas = semillas;
+    }
+    @Override
+    public void moverDerecha() {
+        this.posicionX= this.posicionX+2;
+    }
     
+    /**
+     * Metodo encargado de cambiar la posicion en X (negativo) del personaje.
+     * @since AgroBomberman 1.0
+     */
+    public void moverIzquierda() {
+        this.posicionX= this.posicionX-2;
+    }
+
+    /**
+     * Metodo encargado de cambiar la posicion en Y (negativo) del personaje.
+     * @since AgroBomberman 1.0
+     */
+    public void moverArriba() {
+        this.posicionY= this.posicionY-2;
+    }
     
-    
-    
+    /**
+     * Metodo encargado de cambiar la posicion en Y (positivo) del personaje.
+     * @since AgroBomberman 1.0
+     */
+    public void moverAbajo() {
+        this.posicionY= this.posicionY+2;
+    }
+
 }

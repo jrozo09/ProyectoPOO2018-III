@@ -17,8 +17,6 @@ import javafx.scene.shape.Shape;
 public class Enemigo extends Personaje{
     
     private String orientacion;
-    private int secuencia =0;
-    private int numero =0;
     
     public Enemigo(String orientacion, int posicionX, int posicionY, 
             Image imagen, Shape torso,GraphicsContext lapiz) {

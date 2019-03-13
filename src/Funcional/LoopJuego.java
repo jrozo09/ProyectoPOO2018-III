@@ -35,6 +35,7 @@ public class LoopJuego extends AnimationTimer implements Runnable{
     private Scene escena; //Para controlar los eventos del teclado y para el cambio de nivel.
     private GraphicsContext lapiz; //Objeto con el que se va a "dibujar" en el canvas
     private Image Fondo; //Imagen de fondo
+    private int numNivel = 1;
     
     /**
      * Constructor de la calse para inicializar los atributos.
@@ -47,8 +48,8 @@ public class LoopJuego extends AnimationTimer implements Runnable{
     public LoopJuego(Scene escena, GraphicsContext lapiz) throws IllegalArgumentException{
         this.escena = escena;
         this.lapiz = lapiz;
-        this.nivel = new Nivel(escena,50, 50, "ImagenesJuego/Campesino_aba.png", 
-                "ImagenesJuego/Enemigo_N1_aba.png", this.lapiz,"ImagenesJuego/Pared.png");
+        this.nivel = new Nivel(escena,50, 50, "ImagenesJuego/Campesino_normal.png", 
+                "ImagenesJuego/Enemigo_N1_aba.png", this.lapiz,"ImagenesJuego/Pared.png",7);
         this.Fondo = new Image("ImagenesJuego/Fondo.png");
         //this.Enemigo = new Image(Enemigo);
         this.cronometro = new Cronometro();
@@ -110,20 +111,34 @@ public class LoopJuego extends AnimationTimer implements Runnable{
         //Se detecctan las colisiones superior-inferior y laterales por separado.
         this.nivel.DetectarColisionLadosCampesino();
         this.nivel.DetectarColisionSuperiorCampesino();
-        //Metodo para mover los cinco enemigos del juego.
-        this.nivel.moverEnemigos(0);
-        this.nivel.moverEnemigos(1);
-        this.nivel.moverEnemigos(2);
-        this.nivel.moverEnemigos(3);
-        this.nivel.moverEnemigos(4);
-        this.nivel.moverEnemigos(5);
-        this.nivel.moverEnemigos(6);
-        this.nivel.moverEnemigos(7);
-        this.nivel.moverEnemigos(8);
-        this.nivel.moverEnemigos(9);
-        this.nivel.Semilla();
+        //Metodo para crear la semilla
+        this.nivel.PonerSemilla();
+        //Metodo para mover los enemigos del juego.
+        for (int i = 0; i < this.nivel.getEnemigos().size(); i++) {
+            this.nivel.moverEnemigos(i,this.numNivel);
+        }
+        //Metodo para rectificar cuando el campesino pase de nivel.
+        if ((this.nivel.cambiarNivel())&&(this.numNivel==1)) {
+            setNumNivel(2);
+            Nivel nivel = new Nivel(this.escena, 50, 50, "ImagenesJuego/Campesino_normal.png", 
+                    "ImagenesJuego/Enemigo_N2_aba.png", this.lapiz,"ImagenesJuego/Pared.png",10);
+            setNivel(nivel);
+        }else if((this.nivel.cambiarNivel())&&(this.numNivel==2)){
+            setNumNivel(3);
+            Nivel nivel = new Nivel(this.escena, 50, 50, "ImagenesJuego/Campesino_normal.png", 
+                    "ImagenesJuego/Enemigo_N3_aba.png", this.lapiz,"ImagenesJuego/Pared.png",15);
+            setNivel(nivel);
+        }
     }
 
+    public void setNumNivel(int numNivel) {
+        this.numNivel = numNivel;
+    }
+
+    public void setNivel(Nivel nivel) {
+        this.nivel = nivel;
+    }
+    
     /**
      * Metodo que retorna el objeto cronometro.
      * @return 
