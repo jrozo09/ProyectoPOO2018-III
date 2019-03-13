@@ -10,6 +10,7 @@ import Interfaz.ControladorVentanaPerdedor;
 import GestionArchivos.GestionArchivo;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
@@ -190,7 +191,11 @@ public class LoopJuego extends AnimationTimer implements Runnable{
                 Logger.getLogger(LoopJuego.class.getName()).log(Level.SEVERE, null, ex);
             }
         }else if((this.nivel.cambiarNivel())&&(this.numNivel==3)){
-            
+            try {
+                archivo.guardar(this.puntaje);
+            } catch (IOException ex) {
+                Logger.getLogger(LoopJuego.class.getName()).log(Level.SEVERE, null, ex);
+            }
             ControladorVentanaGanador controlador;
             try {
                 controlador = new ControladorVentanaGanador();
@@ -200,6 +205,11 @@ public class LoopJuego extends AnimationTimer implements Runnable{
             }
         }
         if(this.nivel.getCampesino().getVidas()==0){
+            try {
+                archivo.guardar(this.puntaje);
+            } catch (IOException ex) {
+                Logger.getLogger(LoopJuego.class.getName()).log(Level.SEVERE, null, ex);
+            }
             try {
                 ControladorVentanaPerdedor controlador 
                         = new ControladorVentanaPerdedor();
@@ -236,6 +246,12 @@ public class LoopJuego extends AnimationTimer implements Runnable{
     public Cronometro getCronometro() {
         return cronometro;
     }
+
+    public int getPuntaje() {
+        return puntaje;
+    }
+    
+    
     
     /**
      * Metodo que cambia el valor del booleano cont.

@@ -5,7 +5,9 @@
  */
 package Interfaz;
 
+import GestionArchivos.GestionArchivo;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.EventHandler;
@@ -13,8 +15,10 @@ import javafx.scene.input.MouseEvent;
 
 public class Escenario{
     private EscenarioVista ventana;
+    private GestionArchivo archivo;
 
     public Escenario() throws FileNotFoundException {
+        this.archivo = new GestionArchivo();
         this.ventana =  
                 new EscenarioVista();
         this.ventana.getImg1()
@@ -54,6 +58,11 @@ public class Escenario{
 
         @Override
         public void handle(MouseEvent t) {
+            try {
+                archivo.guardar(ventana.getJuego().getPuntaje());
+            } catch (IOException ex) {
+                Logger.getLogger(Escenario.class.getName()).log(Level.SEVERE, null, ex);
+            }
             try {
                 ControladorVentanaPrincipal controlador = 
                         new ControladorVentanaPrincipal();

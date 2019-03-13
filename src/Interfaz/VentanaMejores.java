@@ -5,8 +5,10 @@
  */
 package Interfaz;
 
+import GestionArchivos.GestionArchivo;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -24,14 +26,15 @@ import javafx.stage.Stage;
 public class VentanaMejores {
     private Scene escena;
     private ImageView img2;
+    private GestionArchivo archivo;
 
     public VentanaMejores() throws FileNotFoundException {
+        this.archivo = new GestionArchivo();
         ImageView img0 = new ImageView(new Image(new FileInputStream("ImagenesJuego/pantalla-tres.png")));
 
         ImageView img1 = new ImageView(new Image(new FileInputStream("ImagenesJuego/mejores-puntajes-3.png")));
 
         this.img2 = new ImageView(new Image(new FileInputStream("ImagenesJuego/regresar-3.png")));
-        
         Text texto0 = new Text(null);
         Text texto1 = new Text(null);
         Text texto2 = new Text(null);
@@ -43,6 +46,38 @@ public class VentanaMejores {
         Text texto8 = new Text(null);
         Text texto9 = new Text(null);
         
+        
+        ArrayList<Integer> puntajes = archivo.cargar();
+        if(puntajes.get(0)!=null){
+             texto0 = new Text(puntajes.get(0).toString());
+        }
+        if(puntajes.get(1)!=null){
+             texto1 = new Text(puntajes.get(1).toString());
+        }
+        if(puntajes.get(2)!=null){
+             texto2 = new Text(puntajes.get(2).toString());
+        }
+        if(puntajes.get(3)!=null){
+             texto3 = new Text(puntajes.get(3).toString());
+        }
+        if(puntajes.get(4)!=null){
+             texto4 = new Text(puntajes.get(4).toString());
+        }
+        if(puntajes.get(5)!=null){
+             texto5 = new Text(puntajes.get(5).toString());
+        }
+        if(puntajes.get(6)!=null){
+             texto6 = new Text(puntajes.get(6).toString());
+        }
+        if(puntajes.get(7)!=null){
+             texto7 = new Text(puntajes.get(7).toString());
+        }
+        if(puntajes.get(8)!=null){
+             texto8 = new Text(puntajes.get(8).toString());
+        }
+        if(puntajes.get(9)!=null){
+             texto9 = new Text(puntajes.get(9).toString());
+        }
         VBox vbox0 = new VBox();
         vbox0.getChildren().addAll(img1, texto0, texto1, texto2, texto3, 
                 texto4, texto5, texto6, texto7, texto8, texto9, img2);

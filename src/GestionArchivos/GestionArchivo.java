@@ -31,7 +31,7 @@ public class GestionArchivo {
         
         PrintStream salida 
                 = new PrintStream(archivo);
-        salida.print(puntaje);
+        salida.print(puntaje+" ");
         
         salida.flush();
         salida.close();
