@@ -170,11 +170,12 @@ public class LoopJuego extends AnimationTimer implements Runnable{
         //Metodo para rectificar cuando el campesino pase de nivel.
         if ((this.nivel.cambiarNivel())&&(this.numNivel==1)&&this.nivel.getEnemigos().size()<1) {
             setNumNivel(2);
+            this.i = 0;
             Nivel nivel;
             try {
                 nivel = new Nivel(this.escena, 50, 50, "ImagenesJuego/Campesino_normal.png", 
                         "ImagenesJuego/Enemigo_N2_aba.png", this.lapiz,"ImagenesJuego/Pared.png",10
-                ,this.nivel.getCampesino().getVidas(),puntaje);
+                ,this.nivel.getCampesino().getVidas(),this.puntaje);
                 setNivel(nivel);
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(LoopJuego.class.getName()).log(Level.SEVERE, null, ex);
@@ -183,6 +184,7 @@ public class LoopJuego extends AnimationTimer implements Runnable{
         }else if((this.nivel.cambiarNivel())&&(this.numNivel==2) && this.nivel.getEnemigos().size()<1){
             try {
                 setNumNivel(3);
+                this.i = 0;
                 Nivel nivel = new Nivel(this.escena, 50, 50, "ImagenesJuego/Campesino_normal.png",
                         "ImagenesJuego/Enemigo_N3_aba.png", this.lapiz,"ImagenesJuego/Pared.png",15,
                 this.nivel.getCampesino().getVidas(),puntaje);
