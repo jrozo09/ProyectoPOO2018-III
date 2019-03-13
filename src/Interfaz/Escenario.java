@@ -8,6 +8,7 @@ package Interfaz;
 import GestionArchivos.GestionArchivo;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.EventHandler;
@@ -58,8 +59,9 @@ public class Escenario{
 
         @Override
         public void handle(MouseEvent t) {
-            try {
-                archivo.guardar(ventana.getJuego().getPuntaje());
+            try {ArrayList<Integer> puntajes = archivo.cargar();
+                puntajes.add(ventana.getJuego().getPuntaje());
+                archivo.guardar(puntajes);
             } catch (IOException ex) {
                 Logger.getLogger(Escenario.class.getName()).log(Level.SEVERE, null, ex);
             }

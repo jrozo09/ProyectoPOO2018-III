@@ -536,8 +536,11 @@ public class Nivel{
                 Pared p = (Pared)this.muros[fila][columna];
                 if(p.getImagen()!=null){
                     if (p.getPuerta()==null) {
+                        Shape contorno = new Rectangle(p.getPosicionX()+5, p.getPosicionY()+5, 
+                            30, 30);
                         PowerUp power = new PowerUp(p.getPosicionX(), p.getPosicionY(),
-                                new Image(new FileInputStream("ImagenesJuego/power_up.png")));
+                                new Image(new FileInputStream("ImagenesJuego/power_up.png")),
+                        contorno);
                         p.setPower(power);
                         this.muros[fila][columna]=p;
                         contador2++;
@@ -1014,7 +1017,24 @@ public class Nivel{
             //contadorSem.stop();
         }
     }
-
+    
+    public boolean powerUp(){
+        for (int i = 0; i < 13; i++) {
+            for (int j = 0; j < 21; j++) {
+                if (this.muros[i][j].getClass().getName().equals("Funcional.Pared")) {
+                    Pared p = (Pared)this.muros[i][j];
+                    if ((p.getPower()!=null)&&(this.campesino.getTorso()!=null)) {
+                        Shape intersection = SVGPath.intersect(this.campesino.getTorso(),
+                        p.getPower().getContorno());
+                        if (intersection.getBoundsInLocal().getWidth() != -1) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
     /**
      * Metodo encargado de permitir que cuando el jugador oprima la tecla X se
      * ponga la semilla
@@ -1112,6 +1132,16 @@ public class Nivel{
         Shape semIzq = new Rectangle(x - 5, y + 20, 10, 10); //izq
         Shape semDer = new Rectangle(x + 45, y + 20, 10, 10); //der
 
+        Shape semMedArr = new Rectangle(x + 20, y - 55, 10, 10);//arriba
+        Shape semMedAba = new Rectangle(x + 20, y + 95, 10, 10); //abajo
+        Shape semMedIzq = new Rectangle(x - 55, y + 20, 10, 10); //izq
+        Shape semMedDer = new Rectangle(x + 95, y + 20, 10, 10); //der
+
+        lapiz.strokeOval(x + 20, y - 55, 10, 10);
+        lapiz.strokeOval(x + 20, y + 95, 10, 10);
+        lapiz.strokeOval(x - 55, y + 20, 10, 10);
+        lapiz.strokeOval(x + 95, y + 20, 10, 10);
+
         this.campesino.setSemillas(new Semilla(x, y, semArr, semAba, semDer, semIzq));
 
         boolean interArr = DetectarColisionMuroFijo(this.campesino.getSemillas().getArriba());
@@ -1119,19 +1149,47 @@ public class Nivel{
         boolean interDer = DetectarColisionMuroFijo(this.campesino.getSemillas().getDerecha());;
         boolean interIzq = DetectarColisionMuroFijo(this.campesino.getSemillas().getIzquierda());;
 
-        if (!interArr) {  //mira si hay colision con un muro a la arriba de la semilla
-            lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-arr-2.png")), 0, 0, 50, 50, x, y - 50, 50, 50);
-        }
-        if (!interAba) { //mira si hay colision con un muro a la abajo de la semilla
-            lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-aba-2.png")), 0, 0, 50, 50, x, y + 50, 50, 50);
-        }
-        if (!interDer) { //mira si hay colision con un muro a la izquierda de la semilla
-            lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-der-2.png")), 0, 0, 50, 50, x + 50, y, 50, 50);
-        }
-        if (!interIzq) { //mira si hay colision con un muro a la derecha de la semilla
-            lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-izq-2.png")), 0, 0, 50, 50, x - 50, y, 50, 50);
-        }
+        if (this.campesino.getPowerUp()) {
+            System.out.println("entro");
+            if (!interArr) {  //mira si hay colision con un muro a la arriba de la semilla
+                lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-arr-2.png")), 0, 0, 50, 50, x, y - 50, 50, 50);
+                if(!DetectarColisionMuroFijo(semMedArr)&&!DetectarColisionPared(semMedArr)){
+                   lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-arr-2.png")), 0, 0, 50, 50, x, y - 100, 50, 50); 
+                }
+            }
+            if (!interAba) { //mira si hay colision con un muro a la abajo de la semilla
+                lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-aba-2.png")), 0, 0, 50, 50, x, y + 50, 50, 50);
+                if(!DetectarColisionMuroFijo(semMedAba) &&!DetectarColisionPared(semMedAba)){
+                   lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-aba-2.png")), 0, 0, 50, 50, x, y + 100, 50, 50); 
+                }
+            }
+            if (!interDer) { //mira si hay colision con un muro a la izquierda de la semilla
+                lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-der-2.png")), 0, 0, 50, 50, x+50, y , 50, 50);
+                if(!DetectarColisionMuroFijo(semMedDer)&&!DetectarColisionPared(semMedDer)){
+                   lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-der-2.png")), 0, 0, 50, 50, x+100, y, 50, 50); 
+                }
+            }
+            if (!interIzq) { //mira si hay colision con un muro a la derecha de la semilla
+                lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-izq-2.png")), 0, 0, 50, 50, x-50, y, 50, 50);
+                if(!DetectarColisionMuroFijo(semMedIzq)&&!DetectarColisionPared(semMedIzq)){
+                   lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-izq-2.png")), 0, 0, 50, 50-100, x, y, 50, 50); 
+                }
+            }
 
+        }else{
+            if (!interArr) {  //mira si hay colision con un muro a la arriba de la semilla
+                lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-arr-2.png")), 0, 0, 50, 50, x, y - 50, 50, 50);
+            }
+            if (!interAba) { //mira si hay colision con un muro a la abajo de la semilla
+                lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-aba-2.png")), 0, 0, 50, 50, x, y + 50, 50, 50);
+            }
+            if (!interDer) { //mira si hay colision con un muro a la izquierda de la semilla
+                lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-der-2.png")), 0, 0, 50, 50, x + 50, y, 50, 50);
+            }
+            if (!interIzq) { //mira si hay colision con un muro a la derecha de la semilla
+                lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-izq-2.png")), 0, 0, 50, 50, x - 50, y, 50, 50);
+            }
+        }
         //Se crean los shape que me controlan la destruccion del arbol
         boolean interArr2 = DetectarColisionPared(this.campesino.getSemillas().getArriba());
         boolean interAba2 = DetectarColisionPared(this.campesino.getSemillas().getAbajo());
@@ -1166,7 +1224,7 @@ public class Nivel{
         EliminarEnemigo(x, y);
         EliminarEnemigo(x, y);
         EliminarEnemigo(x, y);
-        
+
         colisionCampesinoSemilla(x, y);
     }
 

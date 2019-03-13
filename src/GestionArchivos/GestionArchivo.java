@@ -24,14 +24,18 @@ public class GestionArchivo {
         this.ruta = "puntajes.txt";
     }
 
-    public void guardar(int puntaje) throws FileNotFoundException, IOException{
+    public void guardar(ArrayList<Integer> puntajes) throws FileNotFoundException, IOException{
         File archivo = new File(ruta);
-        if(!archivo.exists())
+        if(!archivo.exists()){
             archivo.createNewFile();
-        
+        }
+             
         PrintStream salida 
                 = new PrintStream(archivo);
-        salida.print(puntaje+" ");
+        
+        for(Integer i : puntajes){
+            salida.print(i + " ");
+        }
         
         salida.flush();
         salida.close();

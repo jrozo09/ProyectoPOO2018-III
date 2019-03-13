@@ -11,6 +11,7 @@ import GestionArchivos.GestionArchivo;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
@@ -42,7 +43,7 @@ public class LoopJuego extends AnimationTimer implements Runnable{
     private int puntaje = 0;
     private int i=0;
     private GestionArchivo archivo;
-
+    private int c =0;
     
     /**
      * Constructor de la calse para inicializar los atributos.
@@ -138,6 +139,10 @@ public class LoopJuego extends AnimationTimer implements Runnable{
     @Override 
     public void run(){
         try{
+            if (this.nivel.powerUp()&&this.c==0) {
+                this.nivel.getCampesino().setPowerUp(true);
+                c++;
+            }
             //Metodo para mover el campesiono de acuerdo a las distintas animaciones
             this.nivel.moverCampesino(this.numNivel);
             //Metodos para reportar si hay colision entre el personaje y algun muro
@@ -194,7 +199,9 @@ public class LoopJuego extends AnimationTimer implements Runnable{
             }
         }else if((this.nivel.cambiarNivel())&&(this.numNivel==3)){
             try {
-                archivo.guardar(this.puntaje);
+                ArrayList<Integer> puntajes = archivo.cargar();
+                puntajes.add(this.puntaje);
+                archivo.guardar(puntajes);
             } catch (IOException ex) {
                 Logger.getLogger(LoopJuego.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -208,7 +215,9 @@ public class LoopJuego extends AnimationTimer implements Runnable{
         }
         if(this.nivel.getCampesino().getVidas()==0){
             try {
-                archivo.guardar(this.puntaje);
+                ArrayList<Integer> puntajes = archivo.cargar();
+                puntajes.add(this.puntaje);
+                archivo.guardar(puntajes);
             } catch (IOException ex) {
                 Logger.getLogger(LoopJuego.class.getName()).log(Level.SEVERE, null, ex);
             }
