@@ -5,6 +5,7 @@
  */
 package Funcional;
 
+import java.util.Arrays;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -734,146 +735,97 @@ public class Nivel{
      * @throws FileNotFoundException 
      * @since AgroBomberman 1.0
      */
+
+    //REFACTORING: EXTRACT METHOD
     public void moverEnemigos(int num,int numNivel) throws FileNotFoundException{
         int verificar;
-        boolean mover;
+        
         if (this.enemigos.get(num).getOrientacion().equals("Derecha")) {
-            verificar=RectificarMuros(num);
-            switch(verificar){
-                case 1:
-                    DibujarEnemigos(num);
-                    break;
-                case 2:          
-                    mover = DireccionMover(num);
-                    if (!mover) {
-                        if (numNivel==1) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N1_arr.png")));
-                        }else if (numNivel==2) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N2_arr.png")));
-                        }else if (numNivel==3) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N3_arr.png")));
-                        }
-                        this.enemigos.get(num).setOrientacion("Arriba");
-                        //this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_arr.png"));
-                    }else{
-                        if (numNivel==1) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N1_der.png")));
-                        }else if (numNivel==2) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N2_der.png")));
-                        }else if (numNivel==3) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N3_der.png")));
-                        }
-                        this.enemigos.get(num).moverDerecha();
-                        //this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_der.png"));
-                    }
-                    DibujarEnemigos(num);
-                    break;
-                default: break;
-            }
-        }else if (this.enemigos.get(num).getOrientacion().equals("Izquierda")) {
-            verificar=RectificarMuros(num);
-            switch(verificar){
-                case 1:
-                    DibujarEnemigos(num);
-                    break;
-                case 2:
-                                        
-                    mover = DireccionMover(num);
-                    if (!mover) {
-                        if (numNivel==1) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N1_aba.png")));
-                        }else if (numNivel==2) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N2_aba.png")));
-                        }else if (numNivel==3) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N3_aba.png")));
-                        }
-                        this.enemigos.get(num).setOrientacion("Abajo");
-                        //this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_aba.png"));
-                    }else{
-                        if (numNivel==1) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N1_izq.png")));
-                        }else if (numNivel==2) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N2_izq.png")));
-                        }else if (numNivel==3) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N3_izq.png")));
-                        }
-                        //this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_izq.png"));
-                        this.enemigos.get(num).moverIzquierda();
-                    }
-                    DibujarEnemigos(num);
-                    break;
-                default: break;
-            }
-        }else if (this.enemigos.get(num).getOrientacion().equals("Arriba")) {
-            verificar=RectificarMuros(num);
-            switch(verificar){
-                case 1:
-                    DibujarEnemigos(num);
-                    break;
-                case 2:
-                                       
-                    mover = DireccionMover(num);
-                    if (!mover) {
-                        if (numNivel==1) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N1_izq.png")));
-                        }else if (numNivel==2) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N2_izq.png")));
-                        }else if (numNivel==3) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N3_izq.png")));
-                        }
-                        this.enemigos.get(num).setOrientacion("Izquierda");
-                        //this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_izq.png"));
-                    }else{
-                        if (numNivel==1) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N1_arr.png")));
-                        }else if (numNivel==2) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N2_arr.png")));
-                        }else if (numNivel==3) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N3_arr.png")));
-                        }
-                        this.enemigos.get(num).moverArriba();
-                        //this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_arr.png"));
-                    }
-                    DibujarEnemigos(num);
-                    break;
-                default: break;
-            }
-        }else if (this.enemigos.get(num).getOrientacion().equals("Abajo")) {
-            verificar=RectificarMuros(num);
-            switch(verificar){
-                case 1:
-                    DibujarEnemigos(num);
-                    break;
-                case 2:
-                                        
-                    mover = DireccionMover(num);
-                    if (!mover) {
-                        if (numNivel==1) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N1_der.png")));
-                        }else if (numNivel==2) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N2_der.png")));
-                        }else if (numNivel==3) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N3_der.png")));
-                        }
-                        this.enemigos.get(num).setOrientacion("Derecha");
-                        //this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_der.png"));
-                    }else{
-                        if (numNivel==1) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N1_aba.png")));
-                        }else if (numNivel==2) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N2_aba.png")));
-                        }else if (numNivel==3) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N3_aba.png")));
-                        }
-                        this.enemigos.get(num).moverAbajo();
-                        //this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_aba.png"));
-                    }
-                    DibujarEnemigos(num);
-                    break;
-                default: break;
+            verificar = RectificarMuros(num);
+            moverEnDireccion(num, numNivel, verificar);
+        } else if (this.enemigos.get(num).getOrientacion().equals("Izquierda")) {
+            verificar = RectificarMuros(num);
+            moverEnDireccion(num, numNivel, verificar);
+        } else if (this.enemigos.get(num).getOrientacion().equals("Arriba")) {
+            verificar = RectificarMuros(num);
+            moverEnDireccion(num, numNivel, verificar);
+        } else if (this.enemigos.get(num).getOrientacion().equals("Abajo")) {
+            verificar = RectificarMuros(num);
+            moverEnDireccion(num, numNivel, verificar);
+        }
+    }
+        
+    private void moverEnDireccion(int num, int numNivel, int verificar)throws FileNotFoundException{
+        boolean mover;
+        
+        if (verificar == 1){
+            DibujarEnemigos(num);
+        } else if (verificar == 2){
+            mover = DireccionMover(num);
+            
+            String orientacion = obtenerOrientacion(num, numNivel, mover);
+            
+            Image nuevaImagen = obtenerImagen(numNivel, orientacion);
+            this.enemigos.get(num).setImagen(nuevaImagen);
+            
+             ejecutarMovimiento(num, orientacion);
+            DibujarEnemigos(num);
+        }
+    }
+    
+    private String obtenerOrientacion(int num, int numNivel, boolean mover){
+        String orientacion;
+        
+        if(!mover){
+            orientacion = obtenerOrientacionAnterior(num, numNivel);
+        } else {
+            orientacion = obtenerOrientacionNueva(num, numNivel);
+        }
+        return orientacion;
+    }
+    
+    private String obtenerOrientacionAnterior(int num, int numNivel){
+        String orientacionAnterior = this.enemigos.get(num).getOrientacion();
+        String[] orientaciones = {"Derecha", "Izquierda", "Arriba", "Abajo"};
+
+        for (int i = 0; i < orientaciones.length; i++) {
+            if (orientaciones[i].equals(orientacionAnterior)) {
+                int indiceAnterior = (i + 2) % orientaciones.length;
+                return orientaciones[indiceAnterior];
             }
         }
-     
+        return orientacionAnterior;   
+    }
+    
+    private String obtenerOrientacionNueva(int num, int numNivel) {
+        String[] orientaciones = {"Derecha", "Izquierda", "Arriba", "Abajo"};
+        int indiceActual = Arrays.asList(orientaciones).indexOf(this.enemigos.get(num).getOrientacion());
+        int indiceSiguiente = (indiceActual + 1) % orientaciones.length;
+        return orientaciones[indiceSiguiente];
+    }
+    
+    private Image obtenerImagen(int numNivel, String orientacion) throws FileNotFoundException {
+        String rutaImagen = "ImagenesJuego/Enemigo_N" + numNivel + "_" + orientacion.toLowerCase() + ".png";
+        return new Image(new FileInputStream(rutaImagen));
+    }
+    
+    private void ejecutarMovimiento(int num, String orientacion) {
+        switch (orientacion) {
+            case "Derecha":
+                this.enemigos.get(num).moverDerecha();
+                break;
+            case "Izquierda":
+                this.enemigos.get(num).moverIzquierda();
+                break;
+            case "Arriba":
+                this.enemigos.get(num).moverArriba();
+                break;
+            case "Abajo":
+                this.enemigos.get(num).moverAbajo();
+                break;
+            default:
+                break;
+        }
     }
 
     /**
