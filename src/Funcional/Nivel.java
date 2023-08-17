@@ -622,7 +622,8 @@ public class Nivel{
     }
 
     private Image obtenerImagen(int numNivel, String orientacion) throws FileNotFoundException {
-        String rutaImagen = "ImagenesJuego/Enemigo_N" + numNivel + "_" + orientacion.toLowerCase() + ".png";
+        String orientacionAbreviado = orientacion.toLowerCase().substring(0, 3);
+        String rutaImagen = "ImagenesJuego/Enemigo_N" + numNivel + "_" + orientacionAbreviado + ".png";
         return new Image(new FileInputStream(rutaImagen));
     }
 
@@ -644,7 +645,7 @@ public class Nivel{
                 break;
         }
     }
-
+    
     /**
      * @return 
      * @since AgroBomberman 1.0
