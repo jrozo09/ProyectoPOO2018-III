@@ -5,6 +5,7 @@
  */
 package Funcional;
 
+import java.util.Arrays;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -52,8 +53,6 @@ public class Nivel{
     private int numero3; //Maneja la animación de la semilla
     
     /**
-     * Constructor de la clase encargado de inicializar los atributos. Además 
-     * crea los muros fijos del nivel del juego, los enemigos y al campesino.
      * @param escena
      * @param posicionX posición en X del campesino.
      * @param posicionY posición en X del campesino.
@@ -122,7 +121,6 @@ public class Nivel{
     }
     
     /**
-     * Método que retorna el Array de enemigos del juego.
      * @return 
      * @since AgroBomberman 1.0
      */
@@ -130,13 +128,11 @@ public class Nivel{
         return enemigos;
     }
     /**
-     * Método encargado de comparar las posiciones entre una pared y un enemigo
-     * y así verificar si estas coinciden.
      * @param p pared con la que se va a comparar.
      * @return 
      * @since AgroBomberman 1.0
      */
-    public boolean Rectificar(Pared p){
+    public boolean RectificarPosicionEnemigoPared(Pared p){
         for (int i = 0; i < this.enemigos.size(); i++) {
             if((this.enemigos.get(i).getPosicionX()==p.getPosicionX())&&(
                     this.enemigos.get(i).getPosicionY()==p.getPosicionY())){
@@ -145,17 +141,10 @@ public class Nivel{
         }
         return true;
     }
-    /**
-     * Metodo encargado de crear el campesino para poder visuliozarlo en el escenario.
+    /**.
      * @since AgroBomberman 1.0
      */
     public void DibujarCampesino() {
-        /*lapiz.drawImage(this.campesino.getImagen(), 0, 50 * this.secuencia, 50, 51,
-                this.campesino.getPosicionX(), this.campesino.getPosicionY(),
-                51, 50);
-        //Se crea la forma del campesino para detectar colisiones
-        Shape torsoCampesino = new Rectangle(this.campesino.getPosicionX()+5,this.campesino.getPosicionY()+5, 40, 40);
-        this.campesino.setTorso(torsoCampesino);*/
         lapiz.drawImage(this.campesino.getImagen(), 0, 50 * this.secuencia, 50, 51,
                 this.campesino.getPosicionX(), this.campesino.getPosicionY(),
                 51, 50);
@@ -166,49 +155,9 @@ public class Nivel{
         }
     }
     /**
-     * Metodo encargado de los eventos del teclado para poder mover al campesino.
      * @since AgroBomberman 1.0
      */
     public void moverCampesino(int numNivel) throws FileNotFoundException{
-        /*//Eventos del teclado
-        if (pulsacionTeclado.contains("LEFT"))
-                   this.campesino.moverIzquierda();
-                if (pulsacionTeclado.contains("RIGHT"))
-                    this.campesino.moverDerecha();
-                if (pulsacionTeclado.contains("UP"))
-                    this.campesino.moverArriba();
-                if (pulsacionTeclado.contains("DOWN"))
-                    this.campesino.moverAbajo();
-                
-        //Se establecen las imagenes del personaje principal segun el sentido en el que se
-        //mueva
-        if(this.numero % 7 == 1){
-                if(this.secuencia == 3){
-                  this.secuencia = 0;
-                }else{
-                  this.secuencia++;
-                }
-        }
-        if (pulsacionTeclado.contains("LEFT")){
-            this.campesino.setImagen(new Image(new FileInputStream("ImagenesJuego/Campesino_izq.png")));
-            DibujarCampesino();
-        }else if (pulsacionTeclado.contains("RIGHT")) {
-            this.campesino.setImagen(new Image(new FileInputStream("ImagenesJuego/Campesino_der.png")));
-            DibujarCampesino();
-        }else if (pulsacionTeclado.contains("UP")) {
-            this.campesino.setImagen(new Image(new FileInputStream("ImagenesJuego/Campesino_arr.png")));
-            DibujarCampesino();
-        }else if (pulsacionTeclado.contains("DOWN")){
-            this.campesino.setImagen(new Image(new FileInputStream("ImagenesJuego/Campesino_aba.png")));
-            DibujarCampesino();
-        }else{
-            this.campesino.setImagen(new Image(new FileInputStream("ImagenesJuego/Campesino_normal.png")));
-            DibujarCampesino();
-        }
-                
-         this.numero++;*/
-       
-                
         //Se establecen las imagenes del personaje principal segun el sentido en el que se
         //mueva
         if(this.numero % 7 == 1){
@@ -267,8 +216,6 @@ public class Nivel{
          this.numero++;
     }
     /**
-     * Metodo encargado de crear los enemigos buscando casillas vacias para 
-     * establecer sus posiciones iniciales.
      * @param imgEnemigos Imagen de los enemigos.
      * @throws FileNotFoundException
      * @since AgroBomberman 1.0
@@ -284,7 +231,7 @@ public class Nivel{
             if(!this.muros[x][y].getClass().getName().equals("Funcional.MuroFijo")){
                 Pared p = (Pared)this.muros[x][y];
                 if(p.getImagen()==null){
-                    rectificarPos = Rectificar(p);
+                    rectificarPos = RectificarPosicionEnemigoPared(p);
                         if (rectificarPos) {
                             
                             Shape forma = new Rectangle(this.muros[x][y].getPosicionX()
@@ -302,7 +249,6 @@ public class Nivel{
 
     
     /**
-     * Metodo encargado de añadir enemigos.
      * @param e
      * @return Retorna un valor booleano que retctifica la añadición del enemigo.
      * @since AgroBomberman 1.0
@@ -312,7 +258,6 @@ public class Nivel{
     }
 
     /**
-     * Se crean los muros tanto fijos como las paredes.
      * @since AgroBomberman 1.0
      */
     public void crearMuros(){
@@ -344,49 +289,11 @@ public class Nivel{
             }
         }
     }
-    /*public boolean detectarColisonMuro(Shape s){
-        
-    }
-    
-    public boolean detectarColisonPared(Shape s){
-        
-    }*/
     
     /**
-     * Método encargado de detectar las colisiones entre el campesino y las 
-     * partes superior e inferior de los muros fijos y paredes.
      * @since AgroBomberman 1.0
      */
     public void DetectarColisionSuperiorCampesino(){
-        /*//Se detectan las colisiones del campesino y los muros y paredes
-        //Si una pared tiene su atributo imagen como null, no se impedirá el paso
-        //hasta que se le asigne una imgen.
-        int detector = this.campesino.getPosicionY();
-        for (int i = 0; i < 13; i++) {
-            for (int j = 0; j < 21; j++) {
-                Shape intersection = SVGPath.intersect(this.campesino.getTorso(),
-                 this.muros[i][j].getForma());
-                if (intersection.getBoundsInLocal().getWidth() != -1) {
-                   if(this.muros[i][j].getClass().getName().equals("Funcional.MuroFijo")){
-                       if (this.pulsacionTeclado.contains("UP")) {
-                           this.campesino.setPosicionY(detector + 2);
-                       }else if (this.pulsacionTeclado.contains("DOWN")) {
-                           this.campesino.setPosicionY(detector - 2);
-                       }
-                    }else if (this.muros[i][j].getClass().getName().equals("Funcional.Pared")) {
-                        Pared p = (Pared) this.muros[i][j];
-                        if(p.getImagen()!=null){
-                            if (this.pulsacionTeclado.contains("UP")) {
-                                this.campesino.setPosicionY(detector + 2);
-                            } else if (this.pulsacionTeclado.contains("DOWN")) {
-                                this.campesino.setPosicionY(detector - 2);
-                            }
-                        }
-                    } 
-                }
-            }
-        
-        }*/
         //Se detectan las colisiones del campesino y los muros y paredes
         //Si una pared tiene su atributo imagen como null, no se impedirá el paso
         //hasta que se le asigne una imgen.
@@ -420,39 +327,9 @@ public class Nivel{
         }
     }
     /**
-     * Método encargado de detectar las colisiones entre el campesino y las 
-     * partes laterales de los muros fijos y paredes.
      * @since AgroBomberman 1.0
      */
     public void DetectarColisionLadosCampesino(){
-        /*//Se detectan las colisiones del campesino y los muros y paredes
-        //Si una pared tiene su atributo imagen como null, no se impedirá el paso
-        //hasta que se le asigne una imgen.
-        int detector = this.campesino.getPosicionX();
-        for (int i = 0; i < 13; i++) {
-            for (int j = 0; j < 21; j++) {
-                Shape intersection = SVGPath.intersect(this.campesino.getTorso(),
-                 this.muros[i][j].getForma());
-                if (intersection.getBoundsInLocal().getWidth() != -1) {
-                   if(this.muros[i][j].getClass().getName().equals("Funcional.MuroFijo")){
-                       if (this.pulsacionTeclado.contains("LEFT")) {
-                           this.campesino.setPosicionX(detector + 2);
-                       } else if (this.pulsacionTeclado.contains("RIGHT")) {
-                           this.campesino.setPosicionX(detector - 2);
-                       }
-                    }else if (this.muros[i][j].getClass().getName().equals("Funcional.Pared")) {
-                        Pared p = (Pared) this.muros[i][j];
-                        if(p.getImagen()!=null){
-                             if (this.pulsacionTeclado.contains("LEFT")) {
-                                this.campesino.setPosicionX(detector + 2);
-                            } else if (this.pulsacionTeclado.contains("RIGHT")) {
-                                this.campesino.setPosicionX(detector - 2);
-                            }
-                        }
-                    } 
-                }
-           }
-        }*/
         //Se detectan las colisiones del campesino y los muros y paredes
         //Si una pared tiene su atributo imagen como null, no se impedirá el paso
         //hasta que se le asigne una imgen.
@@ -485,8 +362,6 @@ public class Nivel{
         }
     }
     /**
-     * Metodo encargado de crear las paredes, asignarles una imagen de manera
-     * aleatoria para que se visualice en el juego.
      * @param imgPared String de la ruta de la imagen de las paredes.
      * @throws FileNotFoundException
      * @since AgroBomberman 1.0
@@ -550,7 +425,6 @@ public class Nivel{
         }
     }
     /**
-     * Metodo encargado de dibujar las paredes en el juego.
      * @since AgroBomberman 1.0
      */
     public void dibujarParedes(){
@@ -573,7 +447,6 @@ public class Nivel{
     }
     
     /**
-     * Método encargado de dibujar a un determinado enemigo dentro del juego.
      * @param num númmero del enemigo el cual se debe dibujar.
      * @since AgroBomberman 1.0
      */
@@ -581,16 +454,12 @@ public class Nivel{
         Shape torsoEnemigo = new Rectangle(this.enemigos.get(num).getPosicionX(), 
                 this.enemigos.get(num).getPosicionY(), 50,50);
         this.enemigos.get(num).setTorso(torsoEnemigo);
-        /*lapiz.strokeRect(this.enemigos.get(num).getPosicionX(), 
-                this.enemigos.get(num).getPosicionY(), 50, 50);*/
         lapiz.drawImage(this.enemigos.get(num).getImagen(),0, 50*this.secuencia, 50,51, 
                 this.enemigos.get(num).getPosicionX(),this.enemigos.get(num).getPosicionY(),51,50);
         
     }
     
-    /**
-     * Método encargado de verificar la cantidad muros con los que choca un 
-     * determinado enemigo.
+    /**.
      * @param num número del enemigo el cual se va a evaluar.
      * @return 
      * @since AgroBomberman 1.0
@@ -598,55 +467,16 @@ public class Nivel{
     public int RectificarMuros(int num){
     double pos_x1 = this.enemigos.get(num).getPosicionX()+50;
     double pos_y1 = this.enemigos.get(num).getPosicionY();
-     /*if (pos_x1%10!=0) {
-            pos_x1 = pos_x1/10;
-            pos_x1 = Math.floor(pos_x1);
-            pos_x1= pos_x1*10;
-        }
-    if (pos_y1 % 10 != 0) {
-        pos_y1 = pos_y1 / 10;
-        pos_y1 = Math.floor(pos_y1);
-        pos_y1 = pos_y1 * 10;
-    }*/
-        
+
      double pos_x2 = this.enemigos.get(num).getPosicionX()-50;
      double pos_y2 = this.enemigos.get(num).getPosicionY();
-     /*if (pos_x2%10!=0) {
-            pos_x2 = pos_x2/10;
-            pos_x2 = Math.floor(pos_x2);
-            pos_x2= pos_x2*10;
-        }
-        if (pos_y2%10!=0) {
-            pos_y2 = pos_y2/10;
-            pos_y2 = Math.floor(pos_y2);
-            pos_y2= pos_y2*10;
-        }*/
         
      double pos_x3 = this.enemigos.get(num).getPosicionX();
      double pos_y3 = this.enemigos.get(num).getPosicionY()+50;
-     /*if (pos_x3%10!=0) {
-            pos_x3 = pos_x3/10;
-            pos_x3 = Math.floor(pos_x3);
-            pos_x3= pos_x3*10;
-        }
-        if (pos_y3%10!=0) {
-            pos_y3 = pos_y3/10;
-            pos_y3 = Math.floor(pos_y3);
-            pos_y3= pos_y3*10;
-        }*/
         
      double pos_x4 = this.enemigos.get(num).getPosicionX();
      double pos_y4 = this.enemigos.get(num).getPosicionY()-50;
-     /*if (pos_x4%10!=0) {
-            pos_x4 = pos_x4/10;
-            pos_x4 = Math.floor(pos_x4);
-            pos_x4= pos_x4*10;
-        }
-        if (pos_y4%10!=0) {
-            pos_y4 = pos_y4/10;
-            pos_y4 = Math.floor(pos_y4);
-            pos_y4= pos_y4*10;
-        }*/
+
         int rectificar=0;
         int X = 0;
         int Y = 0;
@@ -670,7 +500,6 @@ public class Nivel{
                 }
             }
         }
-        //System.out.println(rectificar);
         if (rectificar==4) {
             return 1;
         }
@@ -678,8 +507,6 @@ public class Nivel{
     }
     
     /**
-     * Método encargado de establcer la dirección en la cual se va a mover un 
-     * enemigo luego de chocarse contra un muro fijo o una pared.
      * @param num número del enemigo el cual se va a evaluar.
      * @return 
      * @since AgroBomberman 1.0
@@ -687,16 +514,7 @@ public class Nivel{
     public boolean DireccionMover(int num){
         double x = this.enemigos.get(num).getPosicionX();
         double y = this.enemigos.get(num).getPosicionY();
-        /*if (x%10!=0) {
-            x = x/10;
-            x = Math.floor(x);
-            x= (int)x*10;
-        }
-        if (y%10!=0) {
-            y = y/10;
-            y = Math.floor(y);
-            y= (int)y*10;
-        }*/
+
         if(this.enemigos.get(num).getOrientacion().equals("Derecha")){
             x = x+50;
         }else if (this.enemigos.get(num).getOrientacion().equals("Izquierda")) {
@@ -727,157 +545,108 @@ public class Nivel{
         }
         return true;
     }
+    
     /**
-     * Método encargado de mover a los enemigos dentro del juego.
      * @param num número del enemigo que se va a mover.
      * @param numNivel número de nivel en el que se encuentra el jugador.
      * @throws FileNotFoundException 
      * @since AgroBomberman 1.0
      */
+
+    //REFACTORING: EXTRACT METHOD
     public void moverEnemigos(int num,int numNivel) throws FileNotFoundException{
         int verificar;
-        boolean mover;
+
         if (this.enemigos.get(num).getOrientacion().equals("Derecha")) {
-            verificar=RectificarMuros(num);
-            switch(verificar){
-                case 1:
-                    DibujarEnemigos(num);
-                    break;
-                case 2:          
-                    mover = DireccionMover(num);
-                    if (!mover) {
-                        if (numNivel==1) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N1_arr.png")));
-                        }else if (numNivel==2) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N2_arr.png")));
-                        }else if (numNivel==3) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N3_arr.png")));
-                        }
-                        this.enemigos.get(num).setOrientacion("Arriba");
-                        //this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_arr.png"));
-                    }else{
-                        if (numNivel==1) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N1_der.png")));
-                        }else if (numNivel==2) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N2_der.png")));
-                        }else if (numNivel==3) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N3_der.png")));
-                        }
-                        this.enemigos.get(num).moverDerecha();
-                        //this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_der.png"));
-                    }
-                    DibujarEnemigos(num);
-                    break;
-                default: break;
-            }
-        }else if (this.enemigos.get(num).getOrientacion().equals("Izquierda")) {
-            verificar=RectificarMuros(num);
-            switch(verificar){
-                case 1:
-                    DibujarEnemigos(num);
-                    break;
-                case 2:
-                                        
-                    mover = DireccionMover(num);
-                    if (!mover) {
-                        if (numNivel==1) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N1_aba.png")));
-                        }else if (numNivel==2) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N2_aba.png")));
-                        }else if (numNivel==3) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N3_aba.png")));
-                        }
-                        this.enemigos.get(num).setOrientacion("Abajo");
-                        //this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_aba.png"));
-                    }else{
-                        if (numNivel==1) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N1_izq.png")));
-                        }else if (numNivel==2) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N2_izq.png")));
-                        }else if (numNivel==3) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N3_izq.png")));
-                        }
-                        //this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_izq.png"));
-                        this.enemigos.get(num).moverIzquierda();
-                    }
-                    DibujarEnemigos(num);
-                    break;
-                default: break;
-            }
-        }else if (this.enemigos.get(num).getOrientacion().equals("Arriba")) {
-            verificar=RectificarMuros(num);
-            switch(verificar){
-                case 1:
-                    DibujarEnemigos(num);
-                    break;
-                case 2:
-                                       
-                    mover = DireccionMover(num);
-                    if (!mover) {
-                        if (numNivel==1) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N1_izq.png")));
-                        }else if (numNivel==2) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N2_izq.png")));
-                        }else if (numNivel==3) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N3_izq.png")));
-                        }
-                        this.enemigos.get(num).setOrientacion("Izquierda");
-                        //this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_izq.png"));
-                    }else{
-                        if (numNivel==1) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N1_arr.png")));
-                        }else if (numNivel==2) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N2_arr.png")));
-                        }else if (numNivel==3) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N3_arr.png")));
-                        }
-                        this.enemigos.get(num).moverArriba();
-                        //this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_arr.png"));
-                    }
-                    DibujarEnemigos(num);
-                    break;
-                default: break;
-            }
-        }else if (this.enemigos.get(num).getOrientacion().equals("Abajo")) {
-            verificar=RectificarMuros(num);
-            switch(verificar){
-                case 1:
-                    DibujarEnemigos(num);
-                    break;
-                case 2:
-                                        
-                    mover = DireccionMover(num);
-                    if (!mover) {
-                        if (numNivel==1) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N1_der.png")));
-                        }else if (numNivel==2) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N2_der.png")));
-                        }else if (numNivel==3) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N3_der.png")));
-                        }
-                        this.enemigos.get(num).setOrientacion("Derecha");
-                        //this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_der.png"));
-                    }else{
-                        if (numNivel==1) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N1_aba.png")));
-                        }else if (numNivel==2) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N2_aba.png")));
-                        }else if (numNivel==3) {
-                            this.enemigos.get(num).setImagen(new Image(new FileInputStream("ImagenesJuego/Enemigo_N3_aba.png")));
-                        }
-                        this.enemigos.get(num).moverAbajo();
-                        //this.enemigos.get(num).setImagen(new Image("ImagenesJuego/Enemigo_N1_aba.png"));
-                    }
-                    DibujarEnemigos(num);
-                    break;
-                default: break;
-            }
+            verificar = RectificarMuros(num);
+            moverEnDireccion(num, numNivel, verificar);
+        } else if (this.enemigos.get(num).getOrientacion().equals("Izquierda")) {
+            verificar = RectificarMuros(num);
+            moverEnDireccion(num, numNivel, verificar);
+        } else if (this.enemigos.get(num).getOrientacion().equals("Arriba")) {
+            verificar = RectificarMuros(num);
+            moverEnDireccion(num, numNivel, verificar);
+        } else if (this.enemigos.get(num).getOrientacion().equals("Abajo")) {
+            verificar = RectificarMuros(num);
+            moverEnDireccion(num, numNivel, verificar);
         }
-     
     }
 
+    private void moverEnDireccion(int num, int numNivel, int verificar)throws FileNotFoundException{
+        boolean mover;
+
+        if (verificar == 1){
+            DibujarEnemigos(num);
+        } else if (verificar == 2){
+            mover = DireccionMover(num);
+
+            String orientacion = obtenerOrientacion(num, numNivel, mover);
+
+            Image nuevaImagen = obtenerImagen(numNivel, orientacion);
+            this.enemigos.get(num).setImagen(nuevaImagen);
+
+            ejecutarMovimiento(num, orientacion);
+            DibujarEnemigos(num);
+        }
+    }
+
+    private String obtenerOrientacion(int num, int numNivel, boolean mover){
+        String orientacion;
+        
+        if(!mover){
+            orientacion = obtenerOrientacionAnterior(num, numNivel);
+        } else {
+            orientacion = obtenerOrientacionNueva(num, numNivel);
+        }
+        return orientacion;
+    }
+
+    private String obtenerOrientacionAnterior(int num, int numNivel){
+        String orientacionAnterior = this.enemigos.get(num).getOrientacion();
+        String[] orientaciones = {"Derecha", "Izquierda", "Arriba", "Abajo"};
+
+        for (int i = 0; i < orientaciones.length; i++) {
+            if (orientaciones[i].equals(orientacionAnterior)) {
+                int indiceAnterior = (i + 2) % orientaciones.length;
+                return orientaciones[indiceAnterior];
+            }
+        }
+        return orientacionAnterior;
+    }
+
+    private String obtenerOrientacionNueva(int num, int numNivel) {
+        String[] orientaciones = {"Derecha", "Izquierda", "Arriba", "Abajo"};
+        int indiceActual = Arrays.asList(orientaciones).indexOf(this.enemigos.get(num).getOrientacion());
+        int indiceSiguiente = (indiceActual + 1) % orientaciones.length;
+        return orientaciones[indiceSiguiente];
+    }
+
+    private Image obtenerImagen(int numNivel, String orientacion) throws FileNotFoundException {
+        String orientacionAbreviado = orientacion.toLowerCase().substring(0, 3);
+        String rutaImagen = "ImagenesJuego/Enemigo_N" + numNivel + "_" + orientacionAbreviado + ".png";
+        return new Image(new FileInputStream(rutaImagen));
+    }
+
+    private void ejecutarMovimiento(int num, String orientacion) {
+        switch (orientacion) {
+            case "Derecha":
+                this.enemigos.get(num).moverDerecha();
+                break;
+            case "Izquierda":
+                this.enemigos.get(num).moverIzquierda();
+                break;
+            case "Arriba":
+                this.enemigos.get(num).moverArriba();
+                break;
+            case "Abajo":
+                this.enemigos.get(num).moverAbajo();
+                break;
+            default:
+                break;
+        }
+    }
+    
     /**
-     * Método que me retorna el campesino.
      * @return 
      * @since AgroBomberman 1.0
      */
@@ -886,27 +655,10 @@ public class Nivel{
     }
     
     /**
-     * Método que se encarga de establecer cuando el enemigo ha encontrado la 
-     * puerta y así puede pasar de nivel.
      * @return 
      * @since AgroBomberman 1.0
      */
     public boolean cambiarNivel(){
-        /*for (int i = 0; i < 13; i++) {
-            for (int j = 0; j < 21; j++) {
-                if (this.muros[i][j].getClass().getName().equals("Funcional.Pared")) {
-                    Pared p = (Pared)this.muros[i][j];
-                    if (p.getPuerta()!=null) {
-                        Shape intersection = SVGPath.intersect(this.campesino.getTorso(),
-                        p.getPuerta().getContorno());
-                        if (intersection.getBoundsInLocal().getWidth() != -1) {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        return false;*/
         for (int i = 0; i < 13; i++) {
             for (int j = 0; j < 21; j++) {
                 if (this.muros[i][j].getClass().getName().equals("Funcional.Pared")) {
@@ -923,11 +675,8 @@ public class Nivel{
         }
         return false;
     }
-    /**
-     * Método que me permite establcer una colisión entre allguno de los enemigos
-     * y el campesino.
-     * @since AgroBomberman 1.0
-     */
+
+    //@since AgroBomberman 1.0
     public void colisionCampesinoEnemigo(){
         for (int i = 0; i < this.enemigos.size(); i++) {
             if (this.campesino.getTorso()!=null) {
@@ -939,12 +688,9 @@ public class Nivel{
             }
         }
     }
-    /**
-     * Método encargado de mostrar visualmente la cantidad de vidas que tiene
-     * el campesino.
-     * @throws FileNotFoundException 
-     * @since AgroBomberman 1.0
-     */
+    
+    //@since AgroBomberman 1.0
+
     public void DibujarVidas() throws FileNotFoundException{
         if (this.campesino.getVidas()==3) {
             lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/vidas_3.png")), 
@@ -956,25 +702,15 @@ public class Nivel{
             lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/vidas_1.png")), 
                     70, 0, 50, 51);
         }
-        /*lapiz.drawImage(this.campesino.getImagen(), 0, 50 * this.secuencia, 50, 51,
-                this.campesino.getPosicionX(), this.campesino.getPosicionY(),
-                51, 50);*/
     }
-    //-------------------------------------
-    //-------------------------------------
     
     /**
-     * Metodo que retorna las coordenadas del elemento de tipo pared con el que choca
-     * el Shape evaluado
      * @param s Shape para evaluar con el que se va a evaluar si choco con algun 
      * elemente de tipo Pared.
      * @since AgroBomberman 1.0
      */
     
     public int[] QuePared(Shape s) {
-        //Se detectan las colisiones del campesino y los muros y paredes
-        //Si una pared tiene su atributo imagen como null, no se impedirá el paso
-        //hasta que se le asigne una imgen.
         int[] pos = new int[2];
         for (int i = 0; i < 13; i++) {
             for (int j = 0; j < 21; j++) {
@@ -1002,21 +738,15 @@ public class Nivel{
     }
 
     /**
-     * Metodo encargado de regular el tiempo que dura la animación de poner la
-     * semilla
-     *
      * @since AgroBomberman 1.0
      */
     public void DuracionSemilla() throws FileNotFoundException {
         numero3++;
         if (this.numero3 == 90) {
-            //if (pulsacionTeclado2.contains("X")) {
             pulsacionTeclado2.remove("X");
             secuencia2 = 0;
             this.numero3 = 0;
-            //}
             this.numero2 = 0;
-            //contadorSem.stop();
         }
     }
     
@@ -1037,10 +767,8 @@ public class Nivel{
         }
         return false;
     }
+    
     /**
-     * Metodo encargado de permitir que cuando el jugador oprima la tecla X se
-     * ponga la semilla
-     *
      * @since AgroBomberman 1.0
      */
     public void PonerSemilla() throws FileNotFoundException {
@@ -1088,7 +816,7 @@ public class Nivel{
                     posy, semArr, semAba, semDer, semIzq));
 
             //dibuja la semilla
-            dibujarUfo(posx, posy);
+            dibujarSemillaConExplosion(posx, posy);
 
             if (this.numero2 % 15 == 0) {
                 if (this.secuencia2 == 9) {
@@ -1099,18 +827,15 @@ public class Nivel{
             }
         }
     }
-
     
     /**
-     * Metodo que se encarga de gestionar la animación de la semilla, donde si secuencia2 es menor que 5
-     * dibuja la semilla y en caso contrario dibuja la explosion de la semilla
      * @param x entero que da la coordenada en x para dibujar la semilla
      * @param y entero que da la coordenada en y para dibujar la semilla
      * @since AgroBomberman 1.0
      */
-    public void dibujarUfo(int x, int y) throws FileNotFoundException {
+    public void dibujarSemillaConExplosion(int x, int y) throws FileNotFoundException {
         if (secuencia2 < 5) {
-            dibujarSemilla1(x, y, secuencia2);
+            dibujarSemilla(x, y, secuencia2);
         } else {
             dibujarExplosion(x, y, secuencia2);
         }
@@ -1118,8 +843,6 @@ public class Nivel{
 
     
     /**
-     * Metodo que se encarga de gestionar la animación de la explosion semilla, dependiendo de 
-     * sus colisiones con objetos de tipo Muro y sus consecuencias, como la muerte de personajes.
      * @param x entero que da la coordenada en x para dibujar la semilla
      * @param y entero que da la coordenada en y para dibujar la semilla
      * @param sec entero que representa la secuencia en la que debe dicujarse la explosion
@@ -1158,7 +881,7 @@ public class Nivel{
                 if (!DetectarColisionMuroFijo(semMedArr) && !DetectarColisionPared(semMedArr)) {
                     lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-arr-2.png")), 0, 0, 50, 50, x, y - 100, 50, 50);
                     EliminarEnemigo(x, y - 50);
-                    colisionCampesinoSemillaVer(x, y - 50, this.campesino.getPowerUp());
+                    colisionCampesinoSemillaEjeVertical(x, y - 50, this.campesino.getPowerUp());
                 }
             }
             if (!interAba) { //mira si hay colision con un muro a la abajo de la semilla
@@ -1166,7 +889,7 @@ public class Nivel{
                 if (!DetectarColisionMuroFijo(semMedAba) && !DetectarColisionPared(semMedAba)) {
                     lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-aba-2.png")), 0, 0, 50, 50, x, y + 100, 50, 50);
                     EliminarEnemigo(x, y + 50);
-                    colisionCampesinoSemillaVer(x, y + 50, this.campesino.getPowerUp());
+                    colisionCampesinoSemillaEjeVertical(x, y + 50, this.campesino.getPowerUp());
                 }
             }
             if (!interDer) { //mira si hay colision con un muro a la izquierda de la semilla
@@ -1174,7 +897,7 @@ public class Nivel{
                 if (!DetectarColisionMuroFijo(semMedDer) && !DetectarColisionPared(semMedDer)) {
                     lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-der-2.png")), 0, 0, 50, 50, x + 100, y, 50, 50);
                     EliminarEnemigo(x + 50, y);
-                    colisionCampesinoSemillaHor(x + 50, y,this.campesino.getPowerUp());
+                    colisionCampesinoSemillaEjeHorizontal(x + 50, y,this.campesino.getPowerUp());
                 }
             }
             if (!interIzq) { //mira si hay colision con un muro a la derecha de la semilla
@@ -1182,7 +905,7 @@ public class Nivel{
                 if (!DetectarColisionMuroFijo(semMedIzq) && !DetectarColisionPared(semMedIzq)) {
                     lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/sem-izq-2.png")), 0, 0, 50, 50, x - 100, y, 50, 50);
                     EliminarEnemigo(x - 50, y);
-                    colisionCampesinoSemillaHor(x - 50, y,this.campesino.getPowerUp());
+                    colisionCampesinoSemillaEjeHorizontal(x - 50, y,this.campesino.getPowerUp());
                 }
             }
 
@@ -1271,14 +994,12 @@ public class Nivel{
     }
 
     /**
-     * Metodo que se encarga de gestionar la animación de la explosion semilla, dependiendo de 
-     * sus colisiones con objetos de tipo Muro.
      * @param x entero que da la coordenada en x para dibujar la semilla
      * @param y entero que da la coordenada en y para dibujar la semilla
      * @param sec entero que representa la secuencia en la que debe dicujarse la explosion
      * @since AgroBomberman 1.0
      */
-    public void dibujarSemilla1(int x, int y, int sec) throws FileNotFoundException {
+    public void dibujarSemilla(int x, int y, int sec) throws FileNotFoundException {
         lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/semilla-exp.png")), 0, 50 * sec, 50, 50, x, y, 50, 50);
 
         Shape semArr = new Rectangle(x + 20, y - 5, 10, 10);//arriba
@@ -1296,8 +1017,6 @@ public class Nivel{
     }
 
     /**
-     * Metodo que se encarga de gestionar la animación de la explosion semilla, dependiendo de 
-     * sus colisiones con objetos de tipo Muro y sus consecuencias, como la muerte de personajes.
      * @param secuencia entero que representa la secuencia en la que debe dicujarse la destruccion
      * del arbol
      * @param x booleano indica si debe o no dibujarse la destruccion del arbol
@@ -1309,20 +1028,15 @@ public class Nivel{
         if (x) {
             lapiz.drawImage(new Image(new FileInputStream("ImagenesJuego/destruccion-arbol.png")), 0, 50 * this.secuencia, 50, 50, posix, posiy, 50, 50);
         }
-        //puntaje = puntaje +10;
     }
 
     /**
-     * Metodo que retorna si hubo colision con algun objeto de tipo MuroFijo con respecto al
      * Shape a evaluar
      * @param s Shape para evaluar con el que se va a evaluar si choco con algun 
      * elemente de tipo MuroFijo.
      * @since AgroBomberman 1.0
      */
     public boolean DetectarColisionMuroFijo(Shape s) {
-        //Se detectan las colisiones del campesino y los muros y paredes
-        //Si una pared tiene su atributo imagen como null, no se impedirá el paso
-        //hasta que se le asigne una imgen.
         for (int i = 0; i < 13; i++) {
             for (int j = 0; j < 21; j++) {
                 Shape intersection = SVGPath.intersect(s,
@@ -1339,14 +1053,12 @@ public class Nivel{
     }
 
     /**
-     * Metodo que retorna si hubo colision con algun objeto de tipo Pared con respecto al
      * Shape a evaluar
      * @param s Shape para evaluar con el que se va a evaluar si choco con algun 
      * elemente de tipo Pared.
      * @since AgroBomberman 1.0
      */
     public boolean DetectarColisionPared(Shape s) {
-        //Se detectan las colisiones del campesino y los muros y paredes
         //Si una pared tiene su atributo imagen como null, no se impedirá el paso
         //hasta que se le asigne una imgen.
         int detector = this.campesino.getPosicionX();
@@ -1369,12 +1081,7 @@ public class Nivel{
         return false;
     }
 
-    /**
-     * Metodo encargado de evaluar si hubo una colision de los elementos de la
-     * explosion con la semilla, y en ese caso eliminar el enemigo
-     *
-     * @since AgroBomberman 1.0
-     */
+     //@since AgroBomberman 1.0
     public void EliminarEnemigo(int x1, int y1) throws FileNotFoundException {
 
         Shape semArr = new Rectangle(x1 + 20, y1 - 45, 10, 50);//arriba
@@ -1402,12 +1109,7 @@ public class Nivel{
         }
     }
 
-    /**
-     * Metodo encargado de evaluar si hubo una colision de los elementos de la
-     * explosion con la semilla, y en ese caso eliminar el enemigo
-     *
-     * @since AgroBomberman 1.0
-     */
+    // @since AgroBomberman 1.0
     public void colisionCampesinoSemilla(int x1, int y1) {
 
         Shape semArr = new Rectangle(x1 + 20, y1 - 45, 10, 50);//arriba
@@ -1433,15 +1135,7 @@ public class Nivel{
         }
     }
 
-    /**
-     * Metodo encargado de evaluar si hubo una colision de los elementos de la
-     * explosion con la semilla, y en ese caso eliminar el enemigo
-     * @param x1 indica las coordenas en x para crear el shape
-     * @param y1 indica las coordenas en y para crear el shape
-     * @param g indica si el campesino tiene el power up para evaluar diferente los shapes
-     * @since AgroBomberman 1.0
-     */
-    public void colisionCampesinoSemillaVer(int x1, int y1, boolean g){
+    public void colisionCampesinoSemillaEjeVertical(int x1, int y1, boolean g){
         
         Shape semArr = new Rectangle(x1 + 20, y1 - 45, 10, 50);//arriba
         Shape semAba = new Rectangle(x1 + 20, y1 + 45, 10, 50); //abajo
@@ -1456,15 +1150,7 @@ public class Nivel{
         }
     } 
     
-    /**
-     * Metodo encargado de evaluar si hubo una colision de los elementos de la
-     * explosion con la semilla, y en ese caso eliminar el enemigo
-     * @param x1 indica las coordenas en x para crear el shape
-     * @param y1 indica las coordenas en y para crear el shape
-     * @param g indica si el campesino tiene el power up para evaluar diferente los shapes
-     * @since AgroBomberman 1.0
-     */
-    public void colisionCampesinoSemillaHor(int x1, int y1, boolean g){
+    public void colisionCampesinoSemillaEjeHorizontal(int x1, int y1, boolean g){
         
         Shape semIzq = new Rectangle(x1 - 45, y1 + 20, 50, 10); //izq
         Shape semDer = new Rectangle(x1 + 45, y1 + 20, 50, 10); //der
@@ -1483,10 +1169,7 @@ public class Nivel{
         this.numEnemigos=n;
     }
     
-    /**
-     * Metodo getter del parametro numEnemigos de Nivel
-     * @since AgroBomberman 1.0
-     */
+    // @since AgroBomberman 1.0
     public int getNumEnemigos(){
         return this.numEnemigos;
     }
